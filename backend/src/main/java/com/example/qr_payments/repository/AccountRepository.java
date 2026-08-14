@@ -18,4 +18,11 @@ public interface AccountRepository extends JpaRepository<Account, UUID> {
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("SELECT a FROM Account a WHERE a.id = :id")
     Optional<Account> findByIdForUpdate(@Param("id") UUID id);
+
+    Optional<Account> findBySupabaseUserId(UUID supabaseUserId);
+
+    Optional<Account> findByUsername(String username);
+
+    boolean existsByUsername(String username);
 }
+

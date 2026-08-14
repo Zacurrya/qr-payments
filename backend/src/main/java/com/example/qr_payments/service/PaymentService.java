@@ -17,27 +17,36 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class PaymentService {
-    
+
     private final AccountRepository accountRepository;
     private final LedgerEntryRepository ledgerEntryRepository;
+    private final CurrencyService currencyService;
 
     @Transactional
     public void processPayment(UUID debtorId, UUID creditorId, BigDecimal amount, String reference) {
 
+        // Prevent self-payment
+        if (debtorId.equals(creditorId)) {
+            throw new RuntimeException("Can't send money to yourself");
+        }
+
         // Pessimisticly lock both accounts
         Account debtor = accountRepository.findByIdForUpdate(debtorId)
-        .orElseThrow(() -> new RuntimeException("Debtor account not found"));
+                .orElseThrow(() -> new RuntimeException("Debtor account not found"));
         Account creditor = accountRepository.findByIdForUpdate(creditorId)
-        .orElseThrow(() -> new RuntimeException("Creditor account not found"));
-        
+                .orElseThrow(() -> new RuntimeException("Creditor account not found"));
+
         // Validate funds
         if (debtor.getBalance().compareTo(amount) < 0) {
             throw new RuntimeException("Insufficient funds");
         }
 
+        // Convert amount to creditor's currency
+        BigDecimal amountForCreditor = currencyService.convert(amount, debtor.getCurrency(), creditor.getCurrency());
+
         // Process transaction
         debtor.setBalance(debtor.getBalance().subtract(amount));
-        creditor.setBalance(creditor.getBalance().add(amount));
+        creditor.setBalance(creditor.getBalance().add(amountForCreditor));
 
         accountRepository.save(debtor);
         accountRepository.save(creditor);
@@ -50,16 +59,16 @@ public class PaymentService {
         debitEntry.setAccountId(debtor.getId());
         debitEntry.setAmount(amount.negate()); // Money leaving the debtor
         debitEntry.setEntryType(EntryType.DEBIT);
-        debitEntry.setReferenceCode(reference);        
+        debitEntry.setReferenceCode(reference);
 
         LedgerEntry creditEntry = new LedgerEntry();
         creditEntry.setTransactionId(transactionId);
         creditEntry.setAccountId(creditor.getId());
-        creditEntry.setAmount(amount); // Money arriving at the creditor
+        creditEntry.setAmount(amountForCreditor); // Money arriving at the creditor
         creditEntry.setEntryType(EntryType.CREDIT);
         creditEntry.setReferenceCode(reference);
 
         ledgerEntryRepository.save(debitEntry);
-        ledgerEntryRepository.save(creditEntry);        
+        ledgerEntryRepository.save(creditEntry);
     }
 }

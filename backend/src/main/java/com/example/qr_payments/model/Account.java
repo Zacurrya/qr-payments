@@ -27,6 +27,14 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    /** The Supabase Auth user UUID this account belongs to */
+    @Column(name = "supabase_user_id", nullable = false, unique = true)
+    private UUID supabaseUserId;
+
+    /** Display username (e.g. "alex") */
+    @Column(nullable = false, unique = true, length = 50)
+    private String username;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "account_type", nullable = false)
     private AccountType accountType;
@@ -59,3 +67,4 @@ public class Account {
         this.updatedAt = OffsetDateTime.now();
     }
 }
+
