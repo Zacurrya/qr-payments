@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { useCameraPermissions } from 'expo-camera';
 import contactService, { Contact } from '../services/contactService';
 
+import paymentService from '../services/paymentService';
+
 interface UseSendScannerOptions {
   onScanSuccess: (data: { recipientName: string; accountId: string; qrValue: string }) => void;
 }
@@ -15,9 +17,10 @@ export function useSendScanner({ onScanSuccess }: UseSendScannerOptions) {
   const handleBarCodeScanned = ({ data }: { data: string }) => {
     if (scanned) return;
     setScanned(true);
+    const parsed = paymentService.parseQrPayload(data);
     onScanSuccess({
-      recipientName: 'QR Merchant',
-      accountId: '',
+      recipientName: parsed.recipientName || 'Recipient',
+      accountId: parsed.accountId,
       qrValue: data,
     });
   };

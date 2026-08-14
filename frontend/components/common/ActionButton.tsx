@@ -34,12 +34,14 @@ export const ActionButton: React.FC<ActionButtonProps> = ({
     ? 'text-slate-600 font-semibold'
     : 'text-slate-500 font-semibold';
 
+  const widthClass = className.includes('w-') ? '' : 'w-full';
+
   return (
     <TouchableOpacity
       activeOpacity={0.8}
       onPress={onPress}
       disabled={disabled}
-      className={`w-full py-4 px-4 rounded-2xl items-center justify-center space-y-1 ${containerClass} ${disabled ? 'opacity-50' : ''} ${className}`}
+      className={`${widthClass} py-4 px-4 rounded-2xl items-center justify-center space-y-1 ${containerClass} ${disabled ? 'opacity-50' : ''} ${className}`}
     >
       {icon && (
         <View className={`w-10 h-10 rounded-full items-center justify-center mb-1 ${isPrimary ? 'bg-slate-50/20' : 'bg-sky-500/20 border border-sky-500/40'}`}>

@@ -23,10 +23,12 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
   const { userFullName, balance, cardNumber, currency, transactions, fetchTransactions, loadingTransactions } = useAccount();
 
   return (
-    <SafeAreaView className="flex-1 bg-slate-50">
-      {/* Decorative Circles */}
-      <View className="absolute -top-32 -right-32 w-96 h-96 bg-sky-500/5 rounded-full" style={{ zIndex: -1 }} />
-      <View className="absolute top-1/2 -left-32 w-72 h-72 bg-emerald-500/5 rounded-full" style={{ zIndex: -1 }} />
+    <SafeAreaView className="flex-1 bg-slate-50 relative overflow-hidden">
+      {/* Ambient Decorative Background Orbs */}
+      <View className="absolute -top-32 -right-32 w-96 h-96 bg-sky-500/10 rounded-full" style={{ zIndex: -1 }} />
+      <View className="absolute top-1/4 -left-36 w-80 h-80 bg-indigo-500/10 rounded-full" style={{ zIndex: -1 }} />
+      <View className="absolute bottom-10 -right-20 w-72 h-72 bg-emerald-500/10 rounded-full" style={{ zIndex: -1 }} />
+      <View className="absolute bottom-1/3 left-10 w-40 h-40 bg-sky-400/5 rounded-full" style={{ zIndex: -1 }} />
 
       <StatusBar barStyle="dark-content" backgroundColor="#f8fafc" />
       <ScrollView
@@ -37,7 +39,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
         {/* Header Bar */}
         <View className="flex-row items-center justify-between mb-6">
           <View className="flex-1">
-            <Text className="text-slate-500 text-xs font-semibold uppercase tracking-wider">Welcome back</Text>
+            <Text className="text-slate-500 text-xs font-semibold uppercase tracking-wider">Welcome back,</Text>
             <Text className="text-slate-900 font-bold text-lg">{userFullName}</Text>
           </View>
 

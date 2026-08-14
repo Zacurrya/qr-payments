@@ -1,27 +1,24 @@
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text } from 'react-native';
+import { BackButton } from './BackButton';
 
 interface ScreenHeaderProps {
   title: string;
   onBack?: () => void;
   rightElement?: React.ReactNode;
+  isDarkTheme?: boolean;
 }
 
-export const ScreenHeader: React.FC<ScreenHeaderProps> = ({ title, onBack, rightElement }) => {
+export const ScreenHeader: React.FC<ScreenHeaderProps> = ({ title, onBack, rightElement, isDarkTheme }) => {
   return (
     <View className="flex-row items-center justify-between mb-4">
       {onBack ? (
-        <TouchableOpacity 
-          onPress={onBack}
-          className="w-10 h-10 rounded-xl bg-white border border-slate-200 items-center justify-center active:bg-sky-500/20"
-        >
-          <Text className="text-sky-500 text-lg font-bold">←</Text>
-        </TouchableOpacity>
+        <BackButton onPress={onBack} isDarkTheme={isDarkTheme} />
       ) : (
         <View className="w-10" />
       )}
 
-      <Text className="text-slate-900 font-extrabold text-lg">{title}</Text>
+      <Text className={`font-extrabold text-lg ${isDarkTheme ? 'text-white' : 'text-slate-900'}`}>{title}</Text>
 
       <View className="w-10 items-end">
         {rightElement || <View className="w-10" />}

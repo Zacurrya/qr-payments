@@ -120,14 +120,18 @@ const AppNavigator: React.FC = () => {
   );
 };
 
+import { ColorProvider } from './context/ColorContext';
+
 // ─── Root App ─────────────────────────────────────────────────────────────────
 
 export default function App() {
   return (
     <SafeAreaProvider>
       <AuthProvider>
-        <StatusBar style="dark" />
-        <AppNavigator />
+        <ColorProvider>
+          <StatusBar style="dark" />
+          <AppNavigator />
+        </ColorProvider>
       </AuthProvider>
     </SafeAreaProvider>
   );

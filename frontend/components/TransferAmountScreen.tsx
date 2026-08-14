@@ -30,7 +30,6 @@ export const TransferAmountScreen: React.FC<TransferAmountScreenProps> = ({
     isProcessing,
     showSuccessModal,
     handleKeyPress,
-    handleAddPreset,
     handleConfirm,
     handleCloseModal,
   } = useTransferAmount({ creditorId: accountId, initialAmount, onConfirmSuccess });
@@ -42,8 +41,8 @@ export const TransferAmountScreen: React.FC<TransferAmountScreenProps> = ({
 
         <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ flexGrow: 1, paddingBottom: 24 }}>
           {/* Recipient Badge */}
-          <View className="bg-white border border-sky-500/30 p-4 rounded-2xl flex-row items-center space-x-3 mb-6">
-            <View className="w-12 h-12 rounded-2xl bg-slate-100 border border-sky-500/40 items-center justify-center">
+          <View className="bg-white border border-sky-500/30 p-4 rounded-2xl flex-row items-center mb-6">
+            <View className="w-12 h-12 rounded-2xl bg-slate-100 border border-sky-500/40 items-center justify-center mr-4">
               <Text className="text-sky-500 font-extrabold text-lg">
                 {recipientName ? recipientName.charAt(0).toUpperCase() : '✦'}
               </Text>
@@ -62,34 +61,24 @@ export const TransferAmountScreen: React.FC<TransferAmountScreenProps> = ({
             </Text>
             <View className="bg-slate-50 px-3 py-1 rounded-full border border-slate-200">
               <Text className="text-slate-500 text-xs">
-                Available Vault: <Text className="text-slate-900 font-bold">{paymentService.formatCurrency(balance, currency)}</Text>
+                Available Balance: <Text className="text-slate-900 font-bold">{paymentService.formatCurrency(balance, currency)}</Text>
               </Text>
             </View>
-          </View>
-
-          {/* Preset Buttons */}
-          <View className="flex-row space-x-2 mb-6">
-            {[10, 25, 50, 100].map((preset) => (
-              <TouchableOpacity
-                key={preset}
-                onPress={() => handleAddPreset(preset)}
-                className="flex-1 py-2.5 bg-white border border-slate-200 rounded-xl items-center"
-              >
-                <Text className="text-sky-500 font-bold text-xs">+{getCurrencySymbol(currency)}{preset}</Text>
-              </TouchableOpacity>
-            ))}
           </View>
 
           {/* Custom Numeric Keypad */}
           <NumericKeypad onKeyPress={handleKeyPress} />
 
-          {/* Confirm Payment CTA */}
-          <ActionButton
-            label={isProcessing ? 'Processing Transfer...' : `Send ${getCurrencySymbol(currency)}${amountStr || '0'} Now`}
-            variant="primary"
-            onPress={handleConfirm}
-            disabled={isProcessing || parseFloat(amountStr) <= 0}
-          />
+          {/* Confirm Payment CTA (Decreased Width) */}
+          <View className="items-center w-full mt-2">
+            <ActionButton
+              label={isProcessing ? 'Processing Transfer...' : `Send ${getCurrencySymbol(currency)}${amountStr || '0'} Now`}
+              variant="primary"
+              className="w-4/5 max-w-sm py-3.5"
+              onPress={handleConfirm}
+              disabled={isProcessing || parseFloat(amountStr) <= 0}
+            />
+          </View>
         </ScrollView>
       </View>
 

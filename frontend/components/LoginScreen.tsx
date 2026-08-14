@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, ScrollView, StatusBar, ActivityIndicator } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAuth } from '../hooks/useAuth';
-import { BrandLogo } from './common/BrandLogo';
 import { ActionButton } from './common/ActionButton';
 import { ScreenHeader } from './common/ScreenHeader';
 import { PasswordInput } from './common/PasswordInput';
@@ -50,11 +49,11 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({
 
         <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ flexGrow: 1, paddingBottom: 64 }}>
           {/* Brand */}
-          <View className="items-center mt-4 mb-8">
-            <BrandLogo size="lg" />
-            <Text className="text-sky-500 font-black text-2xl mt-4 tracking-wider">
-              Q<Text className="text-slate-900 font-light">PAY</Text>
+          <View className="items-center mt-2 mb-6">
+            <Text className="text-sky-500 font-black text-5xl tracking-tighter">
+              Q<Text className="text-slate-900 font-extrabold">pay</Text>
             </Text>
+            <Text className="text-slate-500 text-xs font-semibold uppercase tracking-widest mt-1">QR Payment Demo</Text>
           </View>
 
           {/* Error Banner */}

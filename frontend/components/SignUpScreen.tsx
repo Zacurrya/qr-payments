@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, ScrollView, StatusBar, ActivityIndicator } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { Feather } from '@expo/vector-icons';
 import { useAuth } from '../hooks/useAuth';
-import { BrandLogo } from './common/BrandLogo';
 import { ActionButton } from './common/ActionButton';
 import { ScreenHeader } from './common/ScreenHeader';
 import { PasswordInput } from './common/PasswordInput';
+import { getCurrencySymbol } from '../utils/currencyUtils';
 
 interface SignUpScreenProps {
   onBack: () => void;
@@ -28,8 +29,16 @@ export const SignUpScreen: React.FC<SignUpScreenProps> = ({
 
   const [accountType, setAccountType] = useState<'CONSUMER' | 'MERCHANT'>('CONSUMER');
   const [currency, setCurrency] = useState('USD');
+  const [isCurrencyDropdownOpen, setIsCurrencyDropdownOpen] = useState(false);
 
-  const currencies = ['USD', 'EUR', 'GBP', 'JPY', 'AUD'];
+  const currencies = [
+    { code: 'USD', name: 'US Dollar' },
+    { code: 'EUR', name: 'Euro' },
+    { code: 'GBP', name: 'British Pound' },
+    { code: 'JPY', name: 'Japanese Yen' },
+    { code: 'AUD', name: 'Australian Dollar' },
+    { code: 'CAD', name: 'Canadian Dollar' },
+  ];
 
   const handleSignUp = async () => {
     if (!username.trim() || !password.trim()) {
@@ -60,11 +69,11 @@ export const SignUpScreen: React.FC<SignUpScreenProps> = ({
 
         <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ flexGrow: 1, paddingBottom: 32 }}>
           {/* Brand */}
-          <View className="items-center mt-4 mb-8">
-            <BrandLogo size="lg" />
-            <Text className="text-sky-500 font-black text-2xl mt-4 tracking-wider">
-              Q<Text className="text-slate-900 font-light">PAY</Text>
+          <View className="items-center mt-2 mb-6">
+            <Text className="text-sky-500 font-black text-5xl tracking-tighter">
+              Q<Text className="text-slate-900 font-extrabold">Pay</Text>
             </Text>
+            <Text className="text-slate-500 text-xs font-semibold uppercase tracking-widest mt-1">QR Payment Demo</Text>
           </View>
 
           {/* Error Banner */}
@@ -99,26 +108,57 @@ export const SignUpScreen: React.FC<SignUpScreenProps> = ({
               </View>
             </View>
 
-            {/* Currency Selector */}
+            {/* Currency Dropdown */}
             <View>
               <Text className="text-slate-800 text-xs font-bold uppercase tracking-wider mb-2">Base Currency</Text>
-              <ScrollView horizontal showsHorizontalScrollIndicator={false} className="flex-row">
-                {currencies.map((cur) => (
-                  <TouchableOpacity
-                    key={cur}
-                    onPress={() => setCurrency(cur)}
-                    className={`px-4 py-2.5 rounded-xl mr-2 border ${
-                      currency === cur
-                        ? 'bg-sky-500/20 border-sky-500/50'
-                        : 'bg-slate-50 border-slate-200'
-                    }`}
-                  >
-                    <Text className={`text-xs font-bold ${currency === cur ? 'text-sky-500' : 'text-slate-500'}`}>
-                      {cur}
-                    </Text>
-                  </TouchableOpacity>
-                ))}
-              </ScrollView>
+              <TouchableOpacity
+                onPress={() => setIsCurrencyDropdownOpen(!isCurrencyDropdownOpen)}
+                className="flex-row items-center justify-between bg-slate-50 border border-slate-200 px-4 py-3.5 rounded-2xl"
+                activeOpacity={0.8}
+              >
+                <View className="flex-row items-center space-x-2">
+                  <Text className="text-sky-500 font-extrabold text-base">{getCurrencySymbol(currency)}</Text>
+                  <Text className="text-slate-900 font-bold text-base">{currency}</Text>
+                  <Text className="text-slate-500 text-xs font-medium">
+                    ({currencies.find(c => c.code === currency)?.name})
+                  </Text>
+                </View>
+                <Feather
+                  name={isCurrencyDropdownOpen ? 'chevron-up' : 'chevron-down'}
+                  size={18}
+                  color="#0ea5e9"
+                />
+              </TouchableOpacity>
+
+              {isCurrencyDropdownOpen && (
+                <View className="mt-2 bg-slate-50 border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
+                  {currencies.map((cur) => {
+                    const isSelected = currency === cur.code;
+                    return (
+                      <TouchableOpacity
+                        key={cur.code}
+                        onPress={() => {
+                          setCurrency(cur.code);
+                          setIsCurrencyDropdownOpen(false);
+                        }}
+                        className={`flex-row items-center justify-between px-4 py-3 border-b border-slate-200/60 ${isSelected ? 'bg-sky-500/10' : ''
+                          }`}
+                      >
+                        <View className="flex-row items-center space-x-3">
+                          <Text className="text-sky-500 font-bold text-base w-6 text-center">{getCurrencySymbol(cur.code)}</Text>
+                          <View>
+                            <Text className={`text-sm font-bold ${isSelected ? 'text-sky-500' : 'text-slate-900'}`}>
+                              {cur.code}
+                            </Text>
+                            <Text className="text-slate-500 text-xs">{cur.name}</Text>
+                          </View>
+                        </View>
+                        {isSelected && <Feather name="check" size={16} color="#0ea5e9" />}
+                      </TouchableOpacity>
+                    );
+                  })}
+                </View>
+              )}
             </View>
 
             {/* Username */}
