@@ -14,13 +14,13 @@ export const PasswordInput: React.FC<PasswordInputProps> = ({
 
   return (
     <View>
-      <Text className="text-slate-300 text-xs font-bold uppercase tracking-wider mb-2">{label}</Text>
-      <View className="flex-row items-center bg-midnight-950 border border-midnight-800 rounded-2xl pr-2">
+      <Text className="text-slate-800 text-xs font-bold uppercase tracking-wider mb-2">{label}</Text>
+      <View className="flex-row items-center bg-slate-50 border border-slate-200 rounded-2xl pr-2">
         <TextInput
           {...props}
           placeholderTextColor="#475569"
           secureTextEntry={!showPassword}
-          className="flex-1 text-slate-100 font-medium text-base px-4 py-3.5"
+          className="flex-1 text-slate-900 font-medium text-base px-4 py-3.5"
         />
         <TouchableOpacity onPress={() => setShowPassword(!showPassword)} className="p-2">
           <Feather name={showPassword ? "eye" : "eye-off"} size={20} color="#475569" />

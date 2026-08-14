@@ -38,8 +38,8 @@ const AppNavigator: React.FC = () => {
   // Show a loading spinner while AsyncStorage is being read
   if (isLoading) {
     return (
-      <View className="flex-1 bg-midnight-950 items-center justify-center">
-        <ActivityIndicator color="#D4AF37" size="large" />
+      <View className="flex-1 bg-slate-50 items-center justify-center">
+        <ActivityIndicator color="#0ea5e9" size="large" />
       </View>
     );
   }
@@ -126,7 +126,7 @@ export default function App() {
   return (
     <SafeAreaProvider>
       <AuthProvider>
-        <StatusBar style="light" />
+        <StatusBar style="dark" />
         <AppNavigator />
       </AuthProvider>
     </SafeAreaProvider>

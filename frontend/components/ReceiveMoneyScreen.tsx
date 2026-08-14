@@ -16,7 +16,7 @@ export const ReceiveMoneyScreen: React.FC<ReceiveMoneyScreenProps> = ({ onBack }
   } = useReceiveMoney();
 
   return (
-    <SafeAreaView className="flex-1 bg-midnight-950">
+    <SafeAreaView className="flex-1 bg-slate-50">
       <View className="flex-1 px-5 pt-20">
         <ScreenHeader title="Receive Payment" onBack={onBack} />
 

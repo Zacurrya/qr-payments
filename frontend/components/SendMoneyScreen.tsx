@@ -24,14 +24,14 @@ export const SendMoneyScreen: React.FC<SendMoneyScreenProps> = ({ onBack, onScan
   const flashlightButton = (
     <TouchableOpacity
       onPress={toggleTorch}
-      className={`w-10 h-10 rounded-xl border items-center justify-center ${torch ? 'bg-gold-500 border-gold-400' : 'bg-midnight-900 border-midnight-800'}`}
+      className={`w-10 h-10 rounded-xl border items-center justify-center ${torch ? 'bg-sky-500 border-sky-400' : 'bg-white border-slate-200'}`}
     >
-      <Text className={`text-base ${torch ? 'text-midnight-950' : 'text-gold-400'}`}>🔦</Text>
+      <Text className={`text-base ${torch ? 'text-white' : 'text-sky-500'}`}>🔦</Text>
     </TouchableOpacity>
   );
 
   return (
-    <SafeAreaView className="flex-1 bg-midnight-950">
+    <SafeAreaView className="flex-1 bg-slate-50">
       <View className="flex-1 px-5 pt-4">
         <ScreenHeader
           title="Scan QR Code"
@@ -40,21 +40,21 @@ export const SendMoneyScreen: React.FC<SendMoneyScreenProps> = ({ onBack, onScan
         />
 
         <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ flexGrow: 1, paddingBottom: 32 }}>
-          <Text className="text-slate-400 text-xs text-center mb-4">
+          <Text className="text-slate-500 text-xs text-center mb-4">
             Scan another user's QR code to send money
           </Text>
 
           {/* Scanner Window */}
-          <View className="w-full h-full rounded-3xl bg-midnight-900 border-2 border-gold-500/50 overflow-hidden relative shadow-2xl items-center justify-center">
+          <View className="w-full h-full rounded-3xl bg-white border-2 border-sky-500/50 overflow-hidden relative shadow-2xl items-center justify-center">
             {permission?.granted ? (
               scanned ? (
                 <View className="px-6 items-center">
-                  <Text className="text-gold-300 font-bold text-base text-center mb-3">QR Code Detected</Text>
+                  <Text className="text-sky-500 font-bold text-base text-center mb-3">QR Code Detected</Text>
                   <TouchableOpacity
                     onPress={resetScan}
-                    className="bg-gold-500 px-5 py-2.5 rounded-xl"
+                    className="bg-sky-500 px-5 py-2.5 rounded-xl"
                   >
-                    <Text className="text-midnight-950 font-bold text-xs">Scan Again</Text>
+                    <Text className="text-white font-bold text-xs">Scan Again</Text>
                   </TouchableOpacity>
                 </View>
               ) : (
@@ -67,22 +67,22 @@ export const SendMoneyScreen: React.FC<SendMoneyScreenProps> = ({ onBack, onScan
               )
             ) : (
               <View className="px-6 items-center">
-                <Text className="text-gold-300 font-bold text-base text-center mb-2">Camera Permission Needed</Text>
-                <Text className="text-slate-400 text-xs text-center mb-4">Enable camera access to scan QR payment codes live.</Text>
+                <Text className="text-sky-500 font-bold text-base text-center mb-2">Camera Permission Needed</Text>
+                <Text className="text-slate-500 text-xs text-center mb-4">Enable camera access to scan QR payment codes live.</Text>
                 <TouchableOpacity
                   onPress={requestPermission}
-                  className="bg-gold-500 px-5 py-2.5 rounded-xl"
+                  className="bg-sky-500 px-5 py-2.5 rounded-xl"
                 >
-                  <Text className="text-midnight-950 font-bold text-xs">Grant Access</Text>
+                  <Text className="text-white font-bold text-xs">Grant Access</Text>
                 </TouchableOpacity>
               </View>
             )}
 
             {/* Corner Accents */}
-            <View className="absolute top-4 left-4 w-8 h-8 border-t-4 border-l-4 border-gold-300" />
-            <View className="absolute top-4 right-4 w-8 h-8 border-t-4 border-r-4 border-gold-300" />
-            <View className="absolute bottom-4 left-4 w-8 h-8 border-b-4 border-l-4 border-gold-300" />
-            <View className="absolute bottom-4 right-4 w-8 h-8 border-b-4 border-r-4 border-gold-300" />
+            <View className="absolute top-4 left-4 w-8 h-8 border-t-4 border-l-4 border-sky-300" />
+            <View className="absolute top-4 right-4 w-8 h-8 border-t-4 border-r-4 border-sky-300" />
+            <View className="absolute bottom-4 left-4 w-8 h-8 border-b-4 border-l-4 border-sky-300" />
+            <View className="absolute bottom-4 right-4 w-8 h-8 border-b-4 border-r-4 border-sky-300" />
 
             <View className="w-48 h-0.5 bg-gold-400 shadow-md shadow-gold-300 opacity-80" />
           </View>

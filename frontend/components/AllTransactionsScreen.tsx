@@ -112,13 +112,13 @@ export const AllTransactionsScreen: React.FC<AllTransactionsScreenProps> = ({ on
           />
         </View>
         <View>
-          <Text className="text-slate-100 font-bold text-base">{item.title}</Text>
-          <Text className="text-slate-400 text-xs mt-1">{item.time}</Text>
+          <Text className="text-slate-900 font-bold text-base">{item.title}</Text>
+          <Text className="text-slate-500 text-xs mt-1">{item.time}</Text>
         </View>
       </View>
       <Text
         className={`font-bold text-base ${
-          item.isIncome ? 'text-emerald-400' : 'text-slate-100'
+          item.isIncome ? 'text-emerald-400' : 'text-slate-900'
         }`}
       >
         {item.isIncome ? '+' : '-'}{paymentService.formatCurrency(item.amount, currency)}
@@ -128,22 +128,22 @@ export const AllTransactionsScreen: React.FC<AllTransactionsScreenProps> = ({ on
 
   const renderSectionHeader = ({ section: { title } }: { section: TransactionSection }) => (
     <View className="pt-4 pb-1 mt-2 mb-1">
-      <Text className="text-gold-500 font-bold text-xs uppercase tracking-widest">{title}</Text>
+      <Text className="text-sky-500 font-bold text-xs uppercase tracking-widest">{title}</Text>
     </View>
   );
 
   return (
-    <SafeAreaView className="flex-1 bg-midnight-950">
+    <SafeAreaView className="flex-1 bg-slate-50">
       <View className="px-5 pt-4 flex-1">
         <ScreenHeader title="All Transactions" onBack={onBack} />
         
         {loading ? (
           <View className="flex-1 items-center justify-center">
-            <ActivityIndicator size="large" color="#D4AF37" />
+            <ActivityIndicator size="large" color="#0ea5e9" />
           </View>
         ) : sections.length === 0 ? (
           <View className="flex-1 items-center justify-center">
-            <Text className="text-slate-400">No transactions found.</Text>
+            <Text className="text-slate-500">No transactions found.</Text>
           </View>
         ) : (
           <SectionList

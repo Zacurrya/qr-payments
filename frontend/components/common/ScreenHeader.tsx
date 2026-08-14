@@ -13,15 +13,15 @@ export const ScreenHeader: React.FC<ScreenHeaderProps> = ({ title, onBack, right
       {onBack ? (
         <TouchableOpacity 
           onPress={onBack}
-          className="w-10 h-10 rounded-xl bg-midnight-900 border border-midnight-800 items-center justify-center active:bg-gold-500/20"
+          className="w-10 h-10 rounded-xl bg-white border border-slate-200 items-center justify-center active:bg-sky-500/20"
         >
-          <Text className="text-gold-300 text-lg font-bold">←</Text>
+          <Text className="text-sky-500 text-lg font-bold">←</Text>
         </TouchableOpacity>
       ) : (
         <View className="w-10" />
       )}
 
-      <Text className="text-slate-100 font-extrabold text-lg">{title}</Text>
+      <Text className="text-slate-900 font-extrabold text-lg">{title}</Text>
 
       <View className="w-10 items-end">
         {rightElement || <View className="w-10" />}

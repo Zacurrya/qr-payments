@@ -53,8 +53,8 @@ export const SignUpScreen: React.FC<SignUpScreenProps> = ({
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-midnight-950">
-      <StatusBar barStyle="light-content" backgroundColor="#070A11" />
+    <SafeAreaView className="flex-1 bg-slate-50">
+      <StatusBar barStyle="dark-content" backgroundColor="#f8fafc" />
       <View className="flex-1 px-5 pt-4">
         <ScreenHeader title="Create Account" onBack={onBack} />
 
@@ -62,8 +62,8 @@ export const SignUpScreen: React.FC<SignUpScreenProps> = ({
           {/* Brand */}
           <View className="items-center mt-4 mb-8">
             <BrandLogo size="lg" />
-            <Text className="text-gold-300 font-black text-2xl mt-4 tracking-wider">
-              Q<Text className="text-slate-100 font-light">PAY</Text>
+            <Text className="text-sky-500 font-black text-2xl mt-4 tracking-wider">
+              Q<Text className="text-slate-900 font-light">PAY</Text>
             </Text>
           </View>
 
@@ -75,24 +75,24 @@ export const SignUpScreen: React.FC<SignUpScreenProps> = ({
           )}
 
           {/* Form Card */}
-          <View className="bg-midnight-900 border border-midnight-800 rounded-3xl p-5 mb-6 gap-4">
+          <View className="bg-white border border-slate-200 rounded-3xl p-5 mb-6 gap-4">
             {/* Account Type Selector */}
             <View>
-              <Text className="text-slate-300 text-xs font-bold uppercase tracking-wider mb-2">Account Type</Text>
-              <View className="flex-row bg-midnight-950 p-1.5 rounded-2xl border border-midnight-800 space-x-2">
+              <Text className="text-slate-800 text-xs font-bold uppercase tracking-wider mb-2">Account Type</Text>
+              <View className="flex-row bg-slate-50 p-1.5 rounded-2xl border border-slate-200 space-x-2">
                 <TouchableOpacity
                   onPress={() => setAccountType('CONSUMER')}
-                  className={`flex-1 py-2.5 rounded-xl items-center ${accountType === 'CONSUMER' ? 'bg-gold-500/20 border border-gold-500/50' : ''}`}
+                  className={`flex-1 py-2.5 rounded-xl items-center ${accountType === 'CONSUMER' ? 'bg-sky-500/20 border border-sky-500/50' : ''}`}
                 >
-                  <Text className={`text-xs font-bold ${accountType === 'CONSUMER' ? 'text-gold-300' : 'text-slate-400'}`}>
+                  <Text className={`text-xs font-bold ${accountType === 'CONSUMER' ? 'text-sky-500' : 'text-slate-500'}`}>
                     Consumer
                   </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() => setAccountType('MERCHANT')}
-                  className={`flex-1 py-2.5 rounded-xl items-center ${accountType === 'MERCHANT' ? 'bg-gold-500/20 border border-gold-500/50' : ''}`}
+                  className={`flex-1 py-2.5 rounded-xl items-center ${accountType === 'MERCHANT' ? 'bg-sky-500/20 border border-sky-500/50' : ''}`}
                 >
-                  <Text className={`text-xs font-bold ${accountType === 'MERCHANT' ? 'text-gold-300' : 'text-slate-400'}`}>
+                  <Text className={`text-xs font-bold ${accountType === 'MERCHANT' ? 'text-sky-500' : 'text-slate-500'}`}>
                     Merchant
                   </Text>
                 </TouchableOpacity>
@@ -101,7 +101,7 @@ export const SignUpScreen: React.FC<SignUpScreenProps> = ({
 
             {/* Currency Selector */}
             <View>
-              <Text className="text-slate-300 text-xs font-bold uppercase tracking-wider mb-2">Base Currency</Text>
+              <Text className="text-slate-800 text-xs font-bold uppercase tracking-wider mb-2">Base Currency</Text>
               <ScrollView horizontal showsHorizontalScrollIndicator={false} className="flex-row">
                 {currencies.map((cur) => (
                   <TouchableOpacity
@@ -109,11 +109,11 @@ export const SignUpScreen: React.FC<SignUpScreenProps> = ({
                     onPress={() => setCurrency(cur)}
                     className={`px-4 py-2.5 rounded-xl mr-2 border ${
                       currency === cur
-                        ? 'bg-gold-500/20 border-gold-500/50'
-                        : 'bg-midnight-950 border-midnight-800'
+                        ? 'bg-sky-500/20 border-sky-500/50'
+                        : 'bg-slate-50 border-slate-200'
                     }`}
                   >
-                    <Text className={`text-xs font-bold ${currency === cur ? 'text-gold-300' : 'text-slate-400'}`}>
+                    <Text className={`text-xs font-bold ${currency === cur ? 'text-sky-500' : 'text-slate-500'}`}>
                       {cur}
                     </Text>
                   </TouchableOpacity>
@@ -123,7 +123,7 @@ export const SignUpScreen: React.FC<SignUpScreenProps> = ({
 
             {/* Username */}
             <View>
-              <Text className="text-slate-300 text-xs font-bold uppercase tracking-wider mb-2">Username</Text>
+              <Text className="text-slate-800 text-xs font-bold uppercase tracking-wider mb-2">Username</Text>
               <TextInput
                 id="signup-username"
                 value={username}
@@ -132,7 +132,7 @@ export const SignUpScreen: React.FC<SignUpScreenProps> = ({
                 placeholderTextColor="#475569"
                 autoCapitalize="none"
                 autoCorrect={false}
-                className="bg-midnight-950 border border-midnight-800 text-slate-100 font-medium text-base px-4 py-3.5 rounded-2xl"
+                className="bg-slate-50 border border-slate-200 text-slate-900 font-medium text-base px-4 py-3.5 rounded-2xl"
               />
             </View>
 
@@ -146,8 +146,8 @@ export const SignUpScreen: React.FC<SignUpScreenProps> = ({
 
             {/* Starting Balance (For demo purposes) */}
             <View>
-              <Text className="text-slate-300 text-xs font-bold uppercase tracking-wider mb-2">
-                Starting Balance ($) <Text className="text-gold-400/60 font-normal normal-case tracking-normal">— demo only</Text>
+              <Text className="text-slate-800 text-xs font-bold uppercase tracking-wider mb-2">
+                Starting Balance ($) <Text className="text-sky-500/60 font-normal normal-case tracking-normal">— demo only</Text>
               </Text>
               <TextInput
                 id="signup-balance"
@@ -156,14 +156,14 @@ export const SignUpScreen: React.FC<SignUpScreenProps> = ({
                 placeholder="1000.00"
                 placeholderTextColor="#475569"
                 keyboardType="numeric"
-                className="bg-midnight-950 border border-gold-500/30 text-gold-300 font-bold text-base px-4 py-3.5 rounded-2xl"
+                className="bg-slate-50 border border-sky-500/30 text-sky-500 font-bold text-base px-4 py-3.5 rounded-2xl"
               />
             </View>
           </View>
 
           {/* Submit Button */}
           {isLoading ? (
-            <View className="w-full py-4 bg-gold-500/50 rounded-2xl items-center justify-center">
+            <View className="w-full py-4 bg-sky-500/50 rounded-2xl items-center justify-center">
               <ActivityIndicator color="#070A11" />
             </View>
           ) : (
@@ -172,9 +172,9 @@ export const SignUpScreen: React.FC<SignUpScreenProps> = ({
 
           {/* Switch to Login */}
           <TouchableOpacity onPress={onSwitchToLogin} className="items-center mt-5">
-            <Text className="text-slate-400 text-sm">
+            <Text className="text-slate-500 text-sm">
               Already have an account?{' '}
-              <Text className="text-gold-300 font-bold">Log In</Text>
+              <Text className="text-sky-500 font-bold">Log In</Text>
             </Text>
           </TouchableOpacity>
         </ScrollView>

@@ -30,21 +30,21 @@ export const RecentTransactions: React.FC<RecentTransactionsProps> = ({
   const groupedArray = Array.from(groupedMap.entries());
 
   return (
-    <View className="bg-midnight-900 rounded-3xl p-5 border-2 border-gold-500/40 shadow-2xl">
+    <View className="bg-white rounded-3xl p-5 border-2 border-sky-500/40 shadow-2xl">
       <View className="flex-row justify-between items-center mb-2">
-        <Text className="text-slate-100 font-bold text-lg">Recent</Text>
+        <Text className="text-slate-900 font-bold text-lg">Recent</Text>
       </View>
 
       {loading && transactions.length === 0 ? (
         <ActivityIndicator size="small" color="#94a3b8" className="py-4" />
       ) : transactions.length === 0 ? (
-        <Text className="text-slate-400 text-center py-4">No recent transactions found.</Text>
+        <Text className="text-slate-500 text-center py-4">No recent transactions found.</Text>
       ) : (
         <View className="flex-col">
           {groupedArray.map(([dateMarker, txs]) => (
             <View key={dateMarker} className="mb-2">
               <View className="pt-2 pb-1 mt-2 mb-1">
-                <Text className="text-gold-500 font-bold text-xs uppercase tracking-widest">{dateMarker}</Text>
+                <Text className="text-sky-500 font-bold text-xs uppercase tracking-widest">{dateMarker}</Text>
               </View>
               <View className="flex-col gap-5">
                 {txs.map((t, index) => (
@@ -62,13 +62,13 @@ export const RecentTransactions: React.FC<RecentTransactionsProps> = ({
                         />
                       </View>
                       <View>
-                        <Text className="text-slate-100 font-bold text-base">{t.title}</Text>
-                        <Text className="text-slate-400 text-xs mt-1">{t.time}</Text>
+                        <Text className="text-slate-900 font-bold text-base">{t.title}</Text>
+                        <Text className="text-slate-500 text-xs mt-1">{t.time}</Text>
                       </View>
                     </View>
                     <Text
                       className={`font-bold text-base ${
-                        t.isIncome ? 'text-emerald-400' : 'text-slate-100'
+                        t.isIncome ? 'text-emerald-400' : 'text-slate-900'
                       }`}
                     >
                       {t.isIncome ? '+' : '-'}{paymentService.formatCurrency(t.amount, currency)}
@@ -84,9 +84,9 @@ export const RecentTransactions: React.FC<RecentTransactionsProps> = ({
       {transactions.length > 0 && (
         <TouchableOpacity
           onPress={onShowAll}
-          className="mt-8 py-2 px-6 bg-midnight-800 rounded-xl self-center border border-midnight-700 active:bg-midnight-700"
+          className="mt-8 py-2 px-6 bg-slate-100 rounded-xl self-center border border-midnight-700 active:bg-midnight-700"
         >
-          <Text className="text-slate-300 font-semibold text-xs">Show All</Text>
+          <Text className="text-slate-800 font-semibold text-xs">Show All</Text>
         </TouchableOpacity>
       )}
     </View>

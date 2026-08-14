@@ -13,7 +13,7 @@ export const BrandLogo: React.FC<BrandLogoProps> = ({ size = 'md', className = '
     'w-11 h-11 rounded-2xl';
 
   return (
-    <View className={`${dimensionClass} bg-midnight-900 border border-gold-500/40 items-center justify-center shadow-lg shadow-gold-500/10 overflow-hidden p-1 ${className}`}>
+    <View className={`${dimensionClass} bg-white border border-sky-500/40 items-center justify-center shadow-lg shadow-sky-500/10 overflow-hidden p-1 ${className}`}>
       <Image source={require('../../public/logo.png')} className="w-full h-full" resizeMode="contain" />
     </View>
   );

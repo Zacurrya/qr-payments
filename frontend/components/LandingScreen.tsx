@@ -11,8 +11,8 @@ interface LandingScreenProps {
 
 export const LandingScreen: React.FC<LandingScreenProps> = ({ onSignUp, onLogIn }) => {
   return (
-    <SafeAreaView className="flex-1 bg-midnight-950">
-      <StatusBar barStyle="light-content" backgroundColor="#070A11" />
+    <SafeAreaView className="flex-1 bg-slate-50">
+      <StatusBar barStyle="dark-content" backgroundColor="#f8fafc" />
       <ScrollView
         contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', paddingBottom: 48 }}
         showsVerticalScrollIndicator={false}
@@ -21,15 +21,15 @@ export const LandingScreen: React.FC<LandingScreenProps> = ({ onSignUp, onLogIn 
         {/* Hero Brand Section */}
         <View className="items-center mb-12">
           {/* <BrandLogo size="lg" /> */}
-          <Text className="text-gold-300 font-black text-6xl mt-6 mb-2 tracking-wider">
-            Q<Text className="text-slate-100 font-light">Pay</Text>
+          <Text className="text-sky-500 font-black text-6xl mt-6 mb-2 tracking-wider">
+            Q<Text className="text-slate-900 font-light">Pay</Text>
           </Text>
         </View>
 
         {/* Hero Copy */}
         <View className="mb-10 items-center">
-          <Text className="text-slate-100 text-2xl font-light text-center leading-snug mb-3">
-            The payment system for <Text className="text-gold-400">everyone</Text>
+          <Text className="text-slate-900 text-2xl font-light text-center leading-snug mb-3">
+            The payment system for <Text className="text-sky-500">everyone</Text>
           </Text>
         </View>
 

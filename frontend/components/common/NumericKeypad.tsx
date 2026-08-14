@@ -14,16 +14,16 @@ export const NumericKeypad: React.FC<NumericKeypadProps> = ({ onKeyPress }) => {
   ];
 
   return (
-    <View className="bg-midnight-900 border border-midnight-800 rounded-3xl p-4 mb-6 space-y-2">
+    <View className="bg-white border border-slate-200 rounded-3xl p-4 mb-6 space-y-2">
       {rows.map((row, rIdx) => (
         <View key={rIdx} className="flex-row space-x-2">
           {row.map((key) => (
             <TouchableOpacity
               key={key}
               onPress={() => onKeyPress(key)}
-              className="flex-1 py-3.5 bg-midnight-950 border border-midnight-800/80 rounded-2xl items-center justify-center active:bg-gold-500/20"
+              className="flex-1 py-3.5 bg-slate-50 border border-slate-200/80 rounded-2xl items-center justify-center active:bg-sky-500/20"
             >
-              <Text className="text-slate-100 font-bold text-xl">{key}</Text>
+              <Text className="text-slate-900 font-bold text-xl">{key}</Text>
             </TouchableOpacity>
           ))}
         </View>

@@ -36,33 +36,33 @@ export const TransferAmountScreen: React.FC<TransferAmountScreenProps> = ({
   } = useTransferAmount({ creditorId: accountId, initialAmount, onConfirmSuccess });
 
   return (
-    <SafeAreaView className="flex-1 bg-midnight-950">
+    <SafeAreaView className="flex-1 bg-slate-50">
       <View className="flex-1 px-5 pt-4">
         <ScreenHeader title="Payment Amount" onBack={onBack} />
 
         <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ flexGrow: 1, paddingBottom: 24 }}>
           {/* Recipient Badge */}
-          <View className="bg-midnight-900 border border-gold-500/30 p-4 rounded-2xl flex-row items-center space-x-3 mb-6">
-            <View className="w-12 h-12 rounded-2xl bg-midnight-850 border border-gold-500/40 items-center justify-center">
-              <Text className="text-gold-400 font-extrabold text-lg">
+          <View className="bg-white border border-sky-500/30 p-4 rounded-2xl flex-row items-center space-x-3 mb-6">
+            <View className="w-12 h-12 rounded-2xl bg-slate-100 border border-sky-500/40 items-center justify-center">
+              <Text className="text-sky-500 font-extrabold text-lg">
                 {recipientName ? recipientName.charAt(0).toUpperCase() : '✦'}
               </Text>
             </View>
             <View className="flex-1">
-              <Text className="text-slate-400 text-xs font-semibold uppercase">Paying Recipient</Text>
-              <Text className="text-slate-100 font-extrabold text-base">{recipientName || 'Unknown Account'}</Text>
+              <Text className="text-slate-500 text-xs font-semibold uppercase">Paying Recipient</Text>
+              <Text className="text-slate-900 font-extrabold text-base">{recipientName || 'Unknown Account'}</Text>
             </View>
           </View>
 
           {/* Amount Display */}
-          <View className="bg-midnight-900 border-2 border-gold-500/40 rounded-3xl p-6 items-center mb-6 shadow-2xl">
-            <Text className="text-slate-400 text-xs font-bold uppercase tracking-widest mb-1">Enter Amount ({currency || 'USD'})</Text>
-            <Text className="text-gold-300 font-black text-5xl tracking-tight mb-2">
+          <View className="bg-white border-2 border-sky-500/40 rounded-3xl p-6 items-center mb-6 shadow-2xl">
+            <Text className="text-slate-500 text-xs font-bold uppercase tracking-widest mb-1">Enter Amount ({currency || 'USD'})</Text>
+            <Text className="text-sky-500 font-black text-5xl tracking-tight mb-2">
               {getCurrencySymbol(currency)}{amountStr || '0'}
             </Text>
-            <View className="bg-midnight-950 px-3 py-1 rounded-full border border-midnight-800">
-              <Text className="text-slate-400 text-xs">
-                Available Vault: <Text className="text-slate-100 font-bold">{paymentService.formatCurrency(balance, currency)}</Text>
+            <View className="bg-slate-50 px-3 py-1 rounded-full border border-slate-200">
+              <Text className="text-slate-500 text-xs">
+                Available Vault: <Text className="text-slate-900 font-bold">{paymentService.formatCurrency(balance, currency)}</Text>
               </Text>
             </View>
           </View>
@@ -73,9 +73,9 @@ export const TransferAmountScreen: React.FC<TransferAmountScreenProps> = ({
               <TouchableOpacity
                 key={preset}
                 onPress={() => handleAddPreset(preset)}
-                className="flex-1 py-2.5 bg-midnight-900 border border-midnight-800 rounded-xl items-center"
+                className="flex-1 py-2.5 bg-white border border-slate-200 rounded-xl items-center"
               >
-                <Text className="text-gold-400 font-bold text-xs">+{getCurrencySymbol(currency)}{preset}</Text>
+                <Text className="text-sky-500 font-bold text-xs">+{getCurrencySymbol(currency)}{preset}</Text>
               </TouchableOpacity>
             ))}
           </View>
@@ -96,13 +96,13 @@ export const TransferAmountScreen: React.FC<TransferAmountScreenProps> = ({
       {/* Success Modal Overlay */}
       <Modal visible={showSuccessModal} transparent animationType="fade">
         <View className="flex-1 bg-black/80 items-center justify-center px-6">
-          <View className="w-full bg-midnight-900 border-2 border-gold-500/50 rounded-3xl p-6 items-center shadow-2xl">
-            <View className="w-16 h-16 rounded-full bg-gold-500/20 border-2 border-gold-400 items-center justify-center mb-4">
-              <Text className="text-gold-300 font-bold text-3xl">✓</Text>
+          <View className="w-full bg-white border-2 border-sky-500/50 rounded-3xl p-6 items-center shadow-2xl">
+            <View className="w-16 h-16 rounded-full bg-sky-500/20 border-2 border-sky-400 items-center justify-center mb-4">
+              <Text className="text-sky-500 font-bold text-3xl">✓</Text>
             </View>
-            <Text className="text-gold-300 font-black text-2xl mb-1">Transfer Complete</Text>
-            <Text className="text-slate-300 text-sm text-center mb-4">
-              You sent <Text className="text-gold-400 font-bold">{getCurrencySymbol(currency)}{amountStr}</Text> to {recipientName || 'Recipient'}.
+            <Text className="text-sky-500 font-black text-2xl mb-1">Transfer Complete</Text>
+            <Text className="text-slate-800 text-sm text-center mb-4">
+              You sent <Text className="text-sky-500 font-bold">{getCurrencySymbol(currency)}{amountStr}</Text> to {recipientName || 'Recipient'}.
             </Text>
 
             <ActionButton
