@@ -5,6 +5,8 @@ import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { AuthProvider } from './context/AuthContext';
+import { ColorProvider } from './context/ColorContext';
+import { useFonts, Dongle_300Light, Dongle_400Regular, Dongle_700Bold } from '@expo-google-fonts/dongle';
 import { useAuth } from './hooks/useAuth';
 import { useNavigationFlow } from './hooks/useNavigationFlow';
 
@@ -16,6 +18,7 @@ import SendMoneyScreen from './components/SendMoneyScreen';
 import TransferAmountScreen from './components/TransferAmountScreen';
 import ReceiveMoneyScreen from './components/ReceiveMoneyScreen';
 import AllTransactionsScreen from './components/AllTransactionsScreen';
+import { AppSplashScreen } from './components/common/AppSplashScreen';
 
 // ─── Inner navigator (must be inside AuthProvider to use useAuth) ─────────────
 
@@ -35,13 +38,9 @@ const AppNavigator: React.FC = () => {
     handleScanSuccess,
   } = useNavigationFlow();
 
-  // Show a loading spinner while AsyncStorage is being read
+  // Show a loading splash screen while AsyncStorage is being read
   if (isLoading) {
-    return (
-      <View className="flex-1 bg-slate-50 items-center justify-center">
-        <ActivityIndicator color="#0ea5e9" size="large" />
-      </View>
-    );
+    return <AppSplashScreen />;
   }
 
   // ── Unauthenticated flow ────────────────────────────────────────────────────
@@ -120,11 +119,17 @@ const AppNavigator: React.FC = () => {
   );
 };
 
-import { ColorProvider } from './context/ColorContext';
-
-// ─── Root App ─────────────────────────────────────────────────────────────────
-
 export default function App() {
+  const [fontsLoaded] = useFonts({
+    Dongle_300Light,
+    Dongle_400Regular,
+    Dongle_700Bold,
+  });
+
+  if (!fontsLoaded) {
+    return <AppSplashScreen />;
+  }
+
   return (
     <SafeAreaProvider>
       <AuthProvider>

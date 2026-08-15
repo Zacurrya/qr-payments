@@ -34,10 +34,18 @@ export const paymentService = {
     return `QPay://pay/${accountId}?username=${cleanUser}&amount=${cleanAmount}&note=${cleanNote}`;
   },
 
-  processPayment: async (debtorId: string, creditorId: string, amount: string, reference: string = ''): Promise<void> => {
+  processPayment: async (debtorId: string, creditorId: string, amount: string, reference: string = '', idempotencyKey?: string): Promise<void> => {
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/json',
+    };
+
+    if (idempotencyKey) {
+      headers['Idempotency-Key'] = idempotencyKey;
+    }
+
     const res = await fetch(`${API_BASE}/api/v1/payments`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers,
       body: JSON.stringify({
         debtorId,
         creditorId,

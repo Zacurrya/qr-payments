@@ -84,7 +84,7 @@ export const RecentTransactions: React.FC<RecentTransactionsProps> = ({
       {transactions.length > 0 && (
         <TouchableOpacity
           onPress={onShowAll}
-          className="mt-8 py-2 px-6 bg-slate-100 rounded-xl self-center border border-midnight-700 active:bg-midnight-700"
+          className="mt-8 py-2 px-6 bg-slate-100 rounded-xl self-center border border-slate-200 active:bg-slate-200"
         >
           <Text className="text-slate-800 font-semibold text-xs">Show All</Text>
         </TouchableOpacity>

@@ -40,7 +40,7 @@ public class SupabaseAuthService {
         return username.toLowerCase() + "@QPay.internal";
     }
 
-    // ─── REGISTER ────────────────────────────────────────────────────────────────
+    // REGISTER
 
     @Transactional
     public AuthResponse registerUser(String username, String password, BigDecimal initialBalance,
@@ -51,7 +51,7 @@ public class SupabaseAuthService {
 
         String email = toEmail(username);
 
-        // 1. Create user via Supabase Admin API (POST /auth/v1/admin/users)
+        // Create user via Supabase Admin API (POST /auth/v1/admin/users)
         HttpHeaders headers = adminHeaders();
         Map<String, Object> body = Map.of(
                 "email", email,
@@ -97,13 +97,12 @@ public class SupabaseAuthService {
                 saved.getCurrency());
     }
 
-    // ─── LOGIN
-    // ────────────────────────────────────────────────────────────────────
+    // LOGIN
 
     public AuthResponse loginUser(String username, String password) {
         String email = toEmail(username);
 
-        // 1. Get access token from Supabase password grant
+        // Get access token from Supabase password grant
         String accessToken;
         String supabaseUserId;
         try {
@@ -128,7 +127,7 @@ public class SupabaseAuthService {
             throw new RuntimeException("Invalid credentials");
         }
 
-        // 2. Fetch account from DB
+        // Fetch account from DB
         Account account = accountRepository
                 .findBySupabaseUserId(UUID.fromString(supabaseUserId))
                 .orElseThrow(() -> new RuntimeException("Account not found for user"));
@@ -143,7 +142,7 @@ public class SupabaseAuthService {
                 account.getCurrency());
     }
 
-    // ─── HELPERS ─────────────────────────────────────────────────────────────────
+    // HELPERS
 
     private HttpHeaders adminHeaders() {
         HttpHeaders h = new HttpHeaders();

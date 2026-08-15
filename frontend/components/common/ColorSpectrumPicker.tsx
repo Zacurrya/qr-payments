@@ -53,7 +53,7 @@ function hexToHsl(hex: string): { h: number; s: number; l: number } {
   const min = Math.min(r, g, b);
   let h = 0;
   let s = 0;
-  const l = (max + min) / 2;
+  let l = (max + min) / 2;
 
   if (max !== min) {
     const d = max - min;

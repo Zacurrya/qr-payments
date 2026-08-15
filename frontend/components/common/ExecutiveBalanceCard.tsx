@@ -21,7 +21,7 @@ export const ExecutiveBalanceCard: React.FC<ExecutiveBalanceCardProps> = ({
 
       <View className="flex-row justify-between items-start">
         <View>
-          <Text className="text-sky-500 font-bold text-xs uppercase tracking-widest">Balance</Text>
+          <Text className="text-sky-500 font-bold text-sm uppercase tracking-widest">Balance</Text>
           <Text className="text-slate-900 text-4xl font-black tracking-tight mt-1">
             {paymentService.formatCurrency(balance, currency)}
           </Text>

@@ -84,7 +84,7 @@ export const SendMoneyScreen: React.FC<SendMoneyScreenProps> = ({ onBack, onScan
             <View className="absolute bottom-4 left-4 w-8 h-8 border-b-4 border-l-4 border-sky-300" />
             <View className="absolute bottom-4 right-4 w-8 h-8 border-b-4 border-r-4 border-sky-300" />
 
-            <View className="w-48 h-0.5 bg-gold-400 shadow-md shadow-gold-300 opacity-80" />
+            <View className="w-48 h-0.5 bg-sky-400 shadow-md shadow-sky-300 opacity-80" />
           </View>
         </ScrollView>
       </View>

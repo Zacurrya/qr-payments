@@ -2,35 +2,42 @@
 module.exports = {
   content: [
     "./App.{js,jsx,ts,tsx}",
+    "./index.{js,jsx,ts,tsx}",
+    "./app/**/*.{js,jsx,ts,tsx}",
     "./components/**/*.{js,jsx,ts,tsx}",
-    "./app/**/*.{js,jsx,ts,tsx}"
+    "./context/**/*.{js,jsx,ts,tsx}",
+    "./hooks/**/*.{js,jsx,ts,tsx}",
+    "./services/**/*.{js,jsx,ts,tsx}",
+    "./utils/**/*.{js,jsx,ts,tsx}"
   ],
   presets: [require("nativewind/preset")],
   theme: {
     extend: {
+      fontFamily: {
+        dongle: ['Dongle_400Regular', 'Dongle'],
+        'dongle-bold': ['Dongle_700Bold', 'Dongle'],
+        'dongle-light': ['Dongle_300Light', 'Dongle'],
+      },
       colors: {
-        midnight: {
-          950: '#070A11',
-          900: '#0F172A',
-          850: '#141E33',
-          800: '#1E293B',
-          700: '#334155',
-          600: '#475569',
+        primary: {
+          50: '#f0f9ff',
+          100: '#e0f2fe',
+          200: '#bae6fd',
+          300: '#7dd3fc',
+          400: '#38bdf8',
+          500: '#0ea5e9',
+          600: '#0284c7',
+          700: '#0369a1',
+          800: '#075985',
+          900: '#0c4a6e',
+          950: '#082f49',
+          DEFAULT: '#0ea5e9',
         },
-        gold: {
-          50: '#FFFDF0',
-          100: '#FEF8C3',
-          200: '#FDE047',
-          300: '#FACC15',
-          400: '#EAB308',
-          500: '#D4AF37',
-          600: '#CA8A04',
-          700: '#A16207',
-          800: '#854D0E',
-          900: '#713F12',
-          metallic: '#D4AF37',
-          champagne: '#F3E5AB',
-          bronze: '#AA771C',
+        alipay: {
+          blue: '#1677FF',
+          sky: '#0EA5E9',
+          light: '#E6F4FF',
+          dark: '#0958D9',
         }
       }
     },

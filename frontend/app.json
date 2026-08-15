@@ -4,28 +4,28 @@
     "slug": "qr-payments",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./public/logo.png",
+    "icon": "./assets/logo.svg",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "splash": {
-      "image": "./public/logo.png",
+      "image": "./assets/logo.svg",
       "resizeMode": "contain",
-      "backgroundColor": "#070A11"
+      "backgroundColor": "#F0F5FF"
     },
     "ios": {
       "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./public/logo.png",
-        "backgroundColor": "#070A11"
+        "foregroundImage": "./assets/logo.svg",
+        "backgroundColor": "#F0F5FF"
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
       "usesCleartextTraffic": true
     },
     "web": {
-      "favicon": "./public/logo.png"
+      "favicon": "./assets/logo.svg"
     }
   }
 }

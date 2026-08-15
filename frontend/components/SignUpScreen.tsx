@@ -6,6 +6,7 @@ import { useAuth } from '../hooks/useAuth';
 import { ActionButton } from './common/ActionButton';
 import { ScreenHeader } from './common/ScreenHeader';
 import { PasswordInput } from './common/PasswordInput';
+import { QPayLogo } from './common/QPayLogo';
 import { getCurrencySymbol } from '../utils/currencyUtils';
 
 interface SignUpScreenProps {
@@ -69,12 +70,7 @@ export const SignUpScreen: React.FC<SignUpScreenProps> = ({
 
         <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ flexGrow: 1, paddingBottom: 32 }}>
           {/* Brand */}
-          <View className="items-center mt-2 mb-6">
-            <Text className="text-sky-500 font-black text-5xl tracking-tighter">
-              Q<Text className="text-slate-900 font-extrabold">Pay</Text>
-            </Text>
-            <Text className="text-slate-500 text-xs font-semibold uppercase tracking-widest mt-1">QR Payment Demo</Text>
-          </View>
+          <QPayLogo size="lg" showSubtitle={true} className="mt-2 mb-6" />
 
           {/* Error Banner */}
           {error && (
@@ -113,14 +109,15 @@ export const SignUpScreen: React.FC<SignUpScreenProps> = ({
               <Text className="text-slate-800 text-xs font-bold uppercase tracking-wider mb-2">Base Currency</Text>
               <TouchableOpacity
                 onPress={() => setIsCurrencyDropdownOpen(!isCurrencyDropdownOpen)}
-                className="flex-row items-center justify-between bg-slate-50 border border-slate-200 px-4 py-3.5 rounded-2xl"
+                className="flex-row items-center justify-between bg-slate-50 border border-slate-200 px-4 py-3 rounded-2xl"
                 activeOpacity={0.8}
               >
-                <View className="flex-row items-center space-x-2">
-                  <Text className="text-sky-500 font-extrabold text-base">{getCurrencySymbol(currency)}</Text>
-                  <Text className="text-slate-900 font-bold text-base">{currency}</Text>
-                  <Text className="text-slate-500 text-xs font-medium">
-                    ({currencies.find(c => c.code === currency)?.name})
+                <View className="flex-row items-center">
+                  <View className="w-8 h-8 rounded-xl bg-sky-500/10 items-center justify-center mr-3">
+                    <Text className="text-sky-500 font-extrabold text-base">{getCurrencySymbol(currency)}</Text>
+                  </View>
+                  <Text className="text-slate-900 font-bold text-base">
+                    {currencies.find((c) => c.code === currency)?.name || currency}
                   </Text>
                 </View>
                 <Feather
@@ -141,17 +138,17 @@ export const SignUpScreen: React.FC<SignUpScreenProps> = ({
                           setCurrency(cur.code);
                           setIsCurrencyDropdownOpen(false);
                         }}
-                        className={`flex-row items-center justify-between px-4 py-3 border-b border-slate-200/60 ${isSelected ? 'bg-sky-500/10' : ''
-                          }`}
+                        className={`flex-row items-center justify-between px-4 py-3 border-b border-slate-200/60 ${
+                          isSelected ? 'bg-sky-500/10' : ''
+                        }`}
                       >
-                        <View className="flex-row items-center space-x-3">
-                          <Text className="text-sky-500 font-bold text-base w-6 text-center">{getCurrencySymbol(cur.code)}</Text>
-                          <View>
-                            <Text className={`text-sm font-bold ${isSelected ? 'text-sky-500' : 'text-slate-900'}`}>
-                              {cur.code}
-                            </Text>
-                            <Text className="text-slate-500 text-xs">{cur.name}</Text>
+                        <View className="flex-row items-center">
+                          <View className="w-8 h-8 rounded-xl bg-sky-500/10 items-center justify-center mr-3">
+                            <Text className="text-sky-500 font-bold text-base">{getCurrencySymbol(cur.code)}</Text>
                           </View>
+                          <Text className={`text-sm font-bold ${isSelected ? 'text-sky-500' : 'text-slate-900'}`}>
+                            {cur.name}
+                          </Text>
                         </View>
                         {isSelected && <Feather name="check" size={16} color="#0ea5e9" />}
                       </TouchableOpacity>
@@ -187,7 +184,7 @@ export const SignUpScreen: React.FC<SignUpScreenProps> = ({
             {/* Starting Balance (For demo purposes) */}
             <View>
               <Text className="text-slate-800 text-xs font-bold uppercase tracking-wider mb-2">
-                Starting Balance ($) <Text className="text-sky-500/60 font-normal normal-case tracking-normal">— demo only</Text>
+                Starting Balance ({getCurrencySymbol(currency)}) <Text className="text-sky-500/60 font-normal normal-case tracking-normal">— demo only</Text>
               </Text>
               <TextInput
                 id="signup-balance"
@@ -204,7 +201,7 @@ export const SignUpScreen: React.FC<SignUpScreenProps> = ({
           {/* Submit Button */}
           {isLoading ? (
             <View className="w-full py-4 bg-sky-500/50 rounded-2xl items-center justify-center">
-              <ActivityIndicator color="#070A11" />
+              <ActivityIndicator color="#ffffff" />
             </View>
           ) : (
             <ActionButton label="Create Account" variant="primary" onPress={handleSignUp} />

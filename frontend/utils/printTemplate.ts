@@ -22,6 +22,9 @@ export const generateMerchantPosterHtml = ({
     <html>
     <head>
       <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Dongle:wght@300;400;700&display=swap" rel="stylesheet">
       <style>
         @page { size: A4 portrait; margin: 20mm; }
         body {
@@ -39,29 +42,40 @@ export const generateMerchantPosterHtml = ({
         .stand-card {
           border: 3px solid ${selectedColor};
           border-radius: 32px;
-          padding: 48px 40px;
+          padding: 40px 40px 36px;
           text-align: center;
           width: 360px;
-          box-shadow: 0 10px 30px rgba(0,0,0,0.06);
           background: #ffffff;
         }
-        .logo {
-          font-size: 32px;
-          font-weight: 900;
-          color: ${selectedColor};
-          letter-spacing: -1px;
-          margin-bottom: 4px;
+        .logo-container {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          margin-bottom: 18px;
         }
-        .logo span {
+        .logo {
+          font-family: 'Dongle', -apple-system, sans-serif;
+          font-size: 68px;
+          line-height: 0.85;
+          font-weight: 400;
+          margin: 0;
+          padding: 0;
+        }
+        .logo .q-letter {
+          color: #0ea5e9;
+        }
+        .logo .pay-letter {
           color: #0f172a;
         }
         .tagline {
-          font-size: 12px;
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+          font-size: 11px;
           text-transform: uppercase;
           letter-spacing: 2px;
           color: #64748b;
           font-weight: 700;
-          margin-bottom: 24px;
+          margin-top: 2px;
         }
         .qr-box {
           background: ${selectedBgColor};
@@ -104,15 +118,17 @@ export const generateMerchantPosterHtml = ({
     </head>
     <body>
       <div class="stand-card">
-        <div class="logo">Q<span>pay</span></div>
-        <div class="tagline">Certified Merchant</div>
+        <div class="logo-container">
+          <div class="logo"><span class="q-letter">Q</span><span class="pay-letter">pay</span></div>
+          <div class="tagline">Certified Merchant</div>
+        </div>
 
         <div class="qr-box">
           <img src="${qrImageUrl}" alt="Payment QR Code" />
         </div>
 
         <div class="account-name">${username || 'Merchant'}</div>
-        <div class="badge">Scan with QPay or Camera</div>
+        <div class="badge">Scan with Qpay or supported banks</div>
 
         <div class="footer-text">
           Accepts instant, encrypted multi-currency payments.<br />

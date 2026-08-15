@@ -5,6 +5,7 @@ import { useAuth } from '../hooks/useAuth';
 import { ActionButton } from './common/ActionButton';
 import { ScreenHeader } from './common/ScreenHeader';
 import { PasswordInput } from './common/PasswordInput';
+import { QPayLogo } from './common/QPayLogo';
 
 interface LoginScreenProps {
   onBack: () => void;
@@ -49,12 +50,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({
 
         <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ flexGrow: 1, paddingBottom: 64 }}>
           {/* Brand */}
-          <View className="items-center mt-2 mb-6">
-            <Text className="text-sky-500 font-black text-5xl tracking-tighter">
-              Q<Text className="text-slate-900 font-extrabold">pay</Text>
-            </Text>
-            <Text className="text-slate-500 text-xs font-semibold uppercase tracking-widest mt-1">QR Payment Demo</Text>
-          </View>
+          <QPayLogo size="lg" showSubtitle={true} className="mt-2 mb-6" />
 
           {/* Error Banner */}
           {error && (
@@ -90,13 +86,20 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({
           </View>
 
           {/* Submit Button */}
-          {isLoading ? (
-            <View className="w-full py-4 bg-sky-500/50 rounded-2xl items-center justify-center">
-              <ActivityIndicator color="#070A11" />
-            </View>
-          ) : (
-            <ActionButton label="Log In" variant="primary" onPress={handleLogin} />
-          )}
+          <View className="items-center w-full">
+            {isLoading ? (
+              <View className="w-4/5 max-w-sm py-4 bg-sky-500/50 rounded-2xl items-center justify-center">
+                <ActivityIndicator color="#ffffff" />
+              </View>
+            ) : (
+              <ActionButton
+                label="Log In"
+                variant="primary"
+                onPress={handleLogin}
+                className="w-4/5 max-w-sm py-3.5"
+              />
+            )}
+          </View>
 
           {/* Switch to SignUp */}
           <TouchableOpacity onPress={onSwitchToSignUp} className="items-center mt-5">

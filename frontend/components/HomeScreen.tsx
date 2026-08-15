@@ -5,6 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAccount } from '../hooks/useAccount';
 import { ExecutiveBalanceCard } from './common/ExecutiveBalanceCard';
 import { ActionButton } from './common/ActionButton';
+import { QPayLogo } from './common/QPayLogo';
 import { RecentTransactions } from './common/RecentTransactions';
 
 interface HomeScreenProps {
@@ -43,8 +44,8 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
             <Text className="text-slate-900 font-bold text-lg">{userFullName}</Text>
           </View>
 
-          <View className="flex-1 items-center">
-            <Text className="text-sky-500 font-extrabold text-4xl tracking-tighter">Q<Text className="text-slate-900">pay</Text></Text>
+          <View className="flex-1 items-center justify-center">
+            <QPayLogo size="lg" />
           </View>
 
           <View className="flex-1 items-end">

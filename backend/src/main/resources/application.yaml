@@ -19,6 +19,11 @@ spring:
   application:
     name: qr-payments
 
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+
 supabase:
   url: ${SUPABASE_URL:https://tuoqiunkzfqytdjohlcs.supabase.co}
   service-role-key: ${SUPABASE_SERVICE_ROLE_KEY}
