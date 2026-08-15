@@ -1,15 +1,13 @@
 import React from 'react';
 import { View, Text, ScrollView, StatusBar } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useRouter } from 'expo-router';
 import { QPayLogo } from './common/QPayLogo';
 import { ActionButton } from './common/ActionButton';
 
-interface LandingScreenProps {
-  onSignUp: () => void;
-  onLogIn: () => void;
-}
+export const LandingScreen: React.FC = () => {
+  const router = useRouter();
 
-export const LandingScreen: React.FC<LandingScreenProps> = ({ onSignUp, onLogIn }) => {
   return (
     <SafeAreaView className="flex-1 bg-slate-50 relative overflow-hidden">
       <StatusBar barStyle="dark-content" backgroundColor="#f8fafc" />
@@ -39,12 +37,12 @@ export const LandingScreen: React.FC<LandingScreenProps> = ({ onSignUp, onLogIn 
           <ActionButton
             label="Log In"
             variant="secondary"
-            onPress={onLogIn}
+            onPress={() => router.push('/(auth)/login')}
           />
           <ActionButton
             label="Create Account"
             variant="primary"
-            onPress={onSignUp}
+            onPress={() => router.push('/(auth)/signup')}
           />
         </View>
       </ScrollView>

@@ -106,9 +106,7 @@ public class SupabaseAuthService {
         String accessToken;
         String supabaseUserId;
         try {
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_JSON);
-            headers.set("apikey", supabaseProps.getServiceRoleKey());
+            HttpHeaders headers = anonHeaders();
 
             Map<String, String> body = Map.of(
                     "email", email,
@@ -154,9 +152,7 @@ public class SupabaseAuthService {
 
     private String getAccessToken(String email, String password) {
         try {
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_JSON);
-            headers.set("apikey", supabaseProps.getServiceRoleKey());
+            HttpHeaders headers = anonHeaders();
 
             Map<String, String> body = Map.of("email", email, "password", password);
             ResponseEntity<String> resp = restTemplate.postForEntity(
@@ -178,5 +174,13 @@ public class SupabaseAuthService {
         } catch (Exception e) {
             throw new RuntimeException("Failed to parse Supabase user id from response");
         }
+    }
+
+    private HttpHeaders anonHeaders() {
+        HttpHeaders h = new HttpHeaders();
+        h.setContentType(MediaType.APPLICATION_JSON);
+        h.set("apikey", supabaseProps.getAnonKey());
+        h.set("Authorization", "Bearer " + supabaseProps.getAnonKey());
+        return h;
     }
 }

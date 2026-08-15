@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text } from 'react-native';
+import { useRouter } from 'expo-router';
 import { BackButton } from './BackButton';
 
 interface ScreenHeaderProps {
@@ -10,15 +11,20 @@ interface ScreenHeaderProps {
 }
 
 export const ScreenHeader: React.FC<ScreenHeaderProps> = ({ title, onBack, rightElement, isDarkTheme }) => {
+  const router = useRouter();
+
   return (
     <View className="flex-row items-center justify-between mb-4">
-      {onBack ? (
-        <BackButton onPress={onBack} isDarkTheme={isDarkTheme} />
-      ) : (
-        <View className="w-10" />
-      )}
+      <BackButton
+        onPress={onBack ?? (() => router.back())}
+        isDarkTheme={isDarkTheme}
+      />
 
-      <Text className={`font-extrabold text-lg ${isDarkTheme ? 'text-white' : 'text-slate-900'}`}>{title}</Text>
+      <Text
+        className={`text-2xl font-extrabold text-center tracking-tight ${isDarkTheme ? 'text-white' : 'text-slate-900'}`}
+      >
+        {title}
+      </Text>
 
       <View className="w-10 items-end">
         {rightElement || <View className="w-10" />}

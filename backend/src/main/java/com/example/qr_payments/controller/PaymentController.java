@@ -43,6 +43,7 @@ public class PaymentController {
                 request.debtorId(),
                 request.creditorId(),
                 request.amount(),
+                request.currency(),
                 request.reference()
         );
 

@@ -2,25 +2,17 @@ import React from 'react';
 import { Feather } from '@expo/vector-icons';
 import { View, Text, TouchableOpacity, ScrollView, StatusBar, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useRouter } from 'expo-router';
 import { useAccount } from '../hooks/useAccount';
+import { useAuth } from '../hooks/useAuth';
 import { ExecutiveBalanceCard } from './common/ExecutiveBalanceCard';
 import { ActionButton } from './common/ActionButton';
 import { QPayLogo } from './common/QPayLogo';
 import { RecentTransactions } from './common/RecentTransactions';
 
-interface HomeScreenProps {
-  onShowAllTransactions?: () => void;
-  onSendMoney?: () => void;
-  onReceivePayment?: () => void;
-  onLogOut?: () => void;
-}
-
-export const HomeScreen: React.FC<HomeScreenProps> = ({
-  onShowAllTransactions,
-  onSendMoney,
-  onReceivePayment,
-  onLogOut,
-}) => {
+export const HomeScreen: React.FC = () => {
+  const router = useRouter();
+  const { logOut } = useAuth();
   const { userFullName, balance, cardNumber, currency, transactions, fetchTransactions, loadingTransactions } = useAccount();
 
   return (
@@ -49,23 +41,24 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
           </View>
 
           <View className="flex-1 items-end">
-            {onLogOut ? (
-              <TouchableOpacity
-                onPress={() => {
-                  Alert.alert(
-                    "Log Out",
-                    "Are you sure you want to log out?",
-                    [
-                      { text: "Cancel", style: "cancel" },
-                      { text: "Log Out", style: "destructive", onPress: onLogOut }
-                    ]
-                  );
-                }}
-                className="w-10 h-10 rounded-xl bg-white border border-slate-200 items-center justify-center"
-              >
-                <Feather name="log-out" size={16} color="#94a3b8" />
-              </TouchableOpacity>
-            ) : <View className="w-10" />}
+            <TouchableOpacity
+              onPress={() => {
+                Alert.alert(
+                  "Log Out",
+                  "Are you sure you want to log out?",
+                  [
+                    { text: "Cancel", style: "cancel" },
+                    { text: "Log Out", style: "destructive", onPress: async () => {
+                      await logOut();
+                      router.replace('/');
+                    }}
+                  ]
+                );
+              }}
+              className="w-10 h-10 rounded-xl bg-white border border-slate-200 items-center justify-center"
+            >
+              <Feather name="log-out" size={16} color="#94a3b8" />
+            </TouchableOpacity>
           </View>
         </View>
 
@@ -84,7 +77,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
               sublabel="Scan QR or Contact"
               icon="↗"
               variant="primary"
-              onPress={onSendMoney}
+              onPress={() => router.push('/(app)/send')}
             />
           </View>
           <View className="flex-1">
@@ -93,7 +86,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
               sublabel="Show Personal QR"
               icon="↙"
               variant="secondary"
-              onPress={onReceivePayment}
+              onPress={() => router.push('/(app)/receive')}
             />
           </View>
         </View>
@@ -101,7 +94,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
         {/* Recent Transactions */}
         <RecentTransactions
           transactions={transactions}
-          onShowAll={onShowAllTransactions || (() => { })}
+          onShowAll={() => router.push('/(app)/transactions')}
           loading={loadingTransactions}
           currency={currency}
         />
@@ -111,4 +104,3 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
 };
 
 export default HomeScreen;
-

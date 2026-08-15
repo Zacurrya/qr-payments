@@ -23,7 +23,7 @@ public class PaymentService {
     private final CurrencyService currencyService;
 
     @Transactional
-    public void processPayment(UUID debtorId, UUID creditorId, BigDecimal amount, String reference) {
+    public void processPayment(UUID debtorId, UUID creditorId, BigDecimal amount, String currency, String reference) {
 
         // Prevent self-payment
         if (debtorId.equals(creditorId)) {
@@ -36,16 +36,22 @@ public class PaymentService {
         Account creditor = accountRepository.findByIdForUpdate(creditorId)
                 .orElseThrow(() -> new RuntimeException("Creditor account not found"));
 
+        // Fallback to debtor's currency if currency is missing (for backward compatibility)
+        String requestCurrency = (currency != null && !currency.isBlank()) ? currency : debtor.getCurrency();
+
+        // Convert the requested amount to the debtor's currency
+        BigDecimal amountForDebtor = currencyService.convert(amount, requestCurrency, debtor.getCurrency());
+
         // Validate funds
-        if (debtor.getBalance().compareTo(amount) < 0) {
+        if (debtor.getBalance().compareTo(amountForDebtor) < 0) {
             throw new RuntimeException("Insufficient funds");
         }
 
         // Convert amount to creditor's currency
-        BigDecimal amountForCreditor = currencyService.convert(amount, debtor.getCurrency(), creditor.getCurrency());
+        BigDecimal amountForCreditor = currencyService.convert(amount, requestCurrency, creditor.getCurrency());
 
         // Process transaction
-        debtor.setBalance(debtor.getBalance().subtract(amount));
+        debtor.setBalance(debtor.getBalance().subtract(amountForDebtor));
         creditor.setBalance(creditor.getBalance().add(amountForCreditor));
 
         accountRepository.save(debtor);
@@ -57,7 +63,7 @@ public class PaymentService {
         LedgerEntry debitEntry = new LedgerEntry();
         debitEntry.setTransactionId(transactionId);
         debitEntry.setAccountId(debtor.getId());
-        debitEntry.setAmount(amount.negate()); // Money leaving the debtor
+        debitEntry.setAmount(amountForDebtor.negate()); // Money leaving the debtor
         debitEntry.setEntryType(EntryType.DEBIT);
         debitEntry.setReferenceCode(reference);
 

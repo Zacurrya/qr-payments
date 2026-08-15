@@ -27,3 +27,4 @@ spring:
 supabase:
   url: ${SUPABASE_URL:https://tuoqiunkzfqytdjohlcs.supabase.co}
   service-role-key: ${SUPABASE_SERVICE_ROLE_KEY}
+  anon-key: ${EXPO_PUBLIC_SUPABASE_ANON_KEY:sb_publishable_3rRgXi8WkZmRTrjC7_muvw_QIqa8kjJ}

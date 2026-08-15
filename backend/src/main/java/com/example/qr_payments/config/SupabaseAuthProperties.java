@@ -9,4 +9,5 @@ import lombok.Data;
 public class SupabaseAuthProperties {
     private String url;
     private String serviceRoleKey;
+    private String anonKey;
 }

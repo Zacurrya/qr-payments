@@ -7,5 +7,6 @@ public record PaymentRequest(
     UUID debtorId,
     UUID creditorId,
     BigDecimal amount,
+    String currency,
     String reference
 ) {}

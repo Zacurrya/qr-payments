@@ -10,6 +10,7 @@ interface QPayLogoProps {
   className?: string;
   style?: StyleProp<ViewStyle>;
   dark?: boolean;
+  colour?: string;
 }
 
 const SIZE_CONFIGS: Record<'sm' | 'md' | 'lg' | 'xl', { fontSize: number; lineHeight: number; subtitleSize: number }> = {
@@ -26,7 +27,9 @@ export const QPayLogo: React.FC<QPayLogoProps> = ({
   className = '',
   style,
   dark = false,
+  colour,
 }) => {
+  const activeQColor = colour || '#0ea5e9';
   const config = typeof size === 'number'
     ? { fontSize: size, lineHeight: Math.round(size * 0.85), subtitleSize: Math.max(10, Math.round(size * 0.18)) }
     : SIZE_CONFIGS[size] || SIZE_CONFIGS.lg;
@@ -46,7 +49,7 @@ export const QPayLogo: React.FC<QPayLogoProps> = ({
           },
         ]}
       >
-        <Text className="text-sky-500">Q</Text>
+        <Text style={{ color: activeQColor }}>Q</Text>
         <Text style={{ color: textColorPay }}>pay</Text>
       </Text>
 

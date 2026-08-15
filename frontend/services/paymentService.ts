@@ -34,7 +34,7 @@ export const paymentService = {
     return `QPay://pay/${accountId}?username=${cleanUser}&amount=${cleanAmount}&note=${cleanNote}`;
   },
 
-  processPayment: async (debtorId: string, creditorId: string, amount: string, reference: string = '', idempotencyKey?: string): Promise<void> => {
+  processPayment: async (debtorId: string, creditorId: string, amount: string, currency: string = '', reference: string = '', idempotencyKey?: string): Promise<void> => {
     const headers: Record<string, string> = {
       'Content-Type': 'application/json',
     };
@@ -50,6 +50,7 @@ export const paymentService = {
         debtorId,
         creditorId,
         amount: parseFloat(amount),
+        currency,
         reference,
       }),
     });

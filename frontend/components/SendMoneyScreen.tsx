@@ -1,16 +1,13 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, ScrollView, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useRouter } from 'expo-router';
 import { CameraView } from 'expo-camera';
 import { useSendScanner } from '../hooks/useSendScanner';
 import { ScreenHeader } from './common/ScreenHeader';
 
-interface SendMoneyScreenProps {
-  onBack: () => void;
-  onScanSuccess: (data: { recipientName: string; accountId: string; qrValue: string }) => void;
-}
-
-export const SendMoneyScreen: React.FC<SendMoneyScreenProps> = ({ onBack, onScanSuccess }) => {
+export const SendMoneyScreen: React.FC = () => {
+  const router = useRouter();
   const {
     permission,
     requestPermission,
@@ -19,7 +16,7 @@ export const SendMoneyScreen: React.FC<SendMoneyScreenProps> = ({ onBack, onScan
     toggleTorch,
     handleBarCodeScanned,
     resetScan,
-  } = useSendScanner({ onScanSuccess });
+  } = useSendScanner();
 
   const flashlightButton = (
     <TouchableOpacity
@@ -35,7 +32,6 @@ export const SendMoneyScreen: React.FC<SendMoneyScreenProps> = ({ onBack, onScan
       <View className="flex-1 px-5 pt-4">
         <ScreenHeader
           title="Scan QR Code"
-          onBack={onBack}
           rightElement={flashlightButton}
         />
 
@@ -93,4 +89,3 @@ export const SendMoneyScreen: React.FC<SendMoneyScreenProps> = ({ onBack, onScan
 };
 
 export default SendMoneyScreen;
-

@@ -1,23 +1,15 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, ScrollView, StatusBar, ActivityIndicator } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useRouter } from 'expo-router';
 import { useAuth } from '../hooks/useAuth';
 import { ActionButton } from './common/ActionButton';
 import { ScreenHeader } from './common/ScreenHeader';
 import { PasswordInput } from './common/PasswordInput';
 import { QPayLogo } from './common/QPayLogo';
 
-interface LoginScreenProps {
-  onBack: () => void;
-  onSuccess: () => void;
-  onSwitchToSignUp: () => void;
-}
-
-export const LoginScreen: React.FC<LoginScreenProps> = ({
-  onBack,
-  onSuccess,
-  onSwitchToSignUp,
-}) => {
+export const LoginScreen: React.FC = () => {
+  const router = useRouter();
   const { logIn } = useAuth();
 
   const [username, setUsername] = useState('');
@@ -34,7 +26,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({
     setIsLoading(true);
     try {
       await logIn(username.trim(), password);
-      onSuccess();
+      router.replace('/(app)/home');
     } catch (e: any) {
       setError(e.message || 'Login failed. Check your credentials.');
     } finally {
@@ -46,7 +38,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({
     <SafeAreaView className="flex-1 bg-slate-50">
       <StatusBar barStyle="dark-content" backgroundColor="#f8fafc" />
       <View className="flex-1 px-5 pt-4">
-        <ScreenHeader title="Sign In" onBack={onBack} />
+        <ScreenHeader title="Sign In" />
 
         <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ flexGrow: 1, paddingBottom: 64 }}>
           {/* Brand */}
@@ -102,7 +94,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({
           </View>
 
           {/* Switch to SignUp */}
-          <TouchableOpacity onPress={onSwitchToSignUp} className="items-center mt-5">
+          <TouchableOpacity onPress={() => router.push('/(auth)/signup')} className="items-center mt-5">
             <Text className="text-slate-500 text-sm">
               No account yet?{' '}
               <Text className="text-sky-500 font-bold">Create one</Text>

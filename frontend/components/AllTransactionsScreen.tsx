@@ -23,11 +23,7 @@ interface TransactionSection {
   data: Transaction[];
 }
 
-interface AllTransactionsScreenProps {
-  onBack: () => void;
-}
-
-export const AllTransactionsScreen: React.FC<AllTransactionsScreenProps> = ({ onBack }) => {
+export const AllTransactionsScreen: React.FC = () => {
   const { session } = useAuth();
   const [sections, setSections] = useState<TransactionSection[]>([]);
   const [loading, setLoading] = useState(true);
@@ -135,7 +131,7 @@ export const AllTransactionsScreen: React.FC<AllTransactionsScreenProps> = ({ on
   return (
     <SafeAreaView className="flex-1 bg-slate-50">
       <View className="px-5 pt-4 flex-1">
-        <ScreenHeader title="All Transactions" onBack={onBack} />
+        <ScreenHeader title="All Transactions" />
         
         {loading ? (
           <View className="flex-1 items-center justify-center">

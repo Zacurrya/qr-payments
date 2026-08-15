@@ -2,6 +2,7 @@
   "expo": {
     "name": "qr-payments",
     "slug": "qr-payments",
+    "scheme": "qrpayments",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/logo.svg",
@@ -25,7 +26,11 @@
       "usesCleartextTraffic": true
     },
     "web": {
-      "favicon": "./assets/logo.svg"
-    }
+      "favicon": "./assets/logo.svg",
+      "bundler": "metro"
+    },
+    "plugins": [
+      "expo-router"
+    ]
   }
 }

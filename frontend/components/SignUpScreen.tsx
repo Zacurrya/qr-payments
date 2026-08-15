@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, ScrollView, StatusBar, ActivityIndicator } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Feather } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
 import { useAuth } from '../hooks/useAuth';
 import { ActionButton } from './common/ActionButton';
 import { ScreenHeader } from './common/ScreenHeader';
@@ -9,17 +10,8 @@ import { PasswordInput } from './common/PasswordInput';
 import { QPayLogo } from './common/QPayLogo';
 import { getCurrencySymbol } from '../utils/currencyUtils';
 
-interface SignUpScreenProps {
-  onBack: () => void;
-  onSuccess: () => void;
-  onSwitchToLogin: () => void;
-}
-
-export const SignUpScreen: React.FC<SignUpScreenProps> = ({
-  onBack,
-  onSuccess,
-  onSwitchToLogin,
-}) => {
+export const SignUpScreen: React.FC = () => {
+  const router = useRouter();
   const { signUp } = useAuth();
 
   const [username, setUsername] = useState('');
@@ -54,7 +46,7 @@ export const SignUpScreen: React.FC<SignUpScreenProps> = ({
     setIsLoading(true);
     try {
       await signUp(username.trim(), password, parseFloat(balance) || 0, currency, accountType);
-      onSuccess();
+      router.replace('/(app)/home');
     } catch (e: any) {
       setError(e.message || 'Sign up failed. Please try again.');
     } finally {
@@ -66,7 +58,7 @@ export const SignUpScreen: React.FC<SignUpScreenProps> = ({
     <SafeAreaView className="flex-1 bg-slate-50">
       <StatusBar barStyle="dark-content" backgroundColor="#f8fafc" />
       <View className="flex-1 px-5 pt-4">
-        <ScreenHeader title="Create Account" onBack={onBack} />
+        <ScreenHeader title="Create Account" />
 
         <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ flexGrow: 1, paddingBottom: 32 }}>
           {/* Brand */}
@@ -199,16 +191,18 @@ export const SignUpScreen: React.FC<SignUpScreenProps> = ({
           </View>
 
           {/* Submit Button */}
-          {isLoading ? (
-            <View className="w-full py-4 bg-sky-500/50 rounded-2xl items-center justify-center">
-              <ActivityIndicator color="#ffffff" />
-            </View>
-          ) : (
-            <ActionButton label="Create Account" variant="primary" onPress={handleSignUp} />
-          )}
+          <View className="px-8 mt-2">
+            {isLoading ? (
+              <View className="w-full py-4 bg-sky-500/50 rounded-2xl items-center justify-center">
+                <ActivityIndicator color="#ffffff" />
+              </View>
+            ) : (
+              <ActionButton label="Create Account" variant="primary" onPress={handleSignUp} />
+            )}
+          </View>
 
           {/* Switch to Login */}
-          <TouchableOpacity onPress={onSwitchToLogin} className="items-center mt-5">
+          <TouchableOpacity onPress={() => router.push('/(auth)/login')} className="items-center mt-5">
             <Text className="text-slate-500 text-sm">
               Already have an account?{' '}
               <Text className="text-sky-500 font-bold">Log In</Text>

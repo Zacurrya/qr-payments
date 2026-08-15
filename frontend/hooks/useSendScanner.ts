@@ -1,14 +1,11 @@
 import { useState } from 'react';
 import { useCameraPermissions } from 'expo-camera';
+import { useRouter } from 'expo-router';
 import contactService, { Contact } from '../services/contactService';
-
 import paymentService from '../services/paymentService';
 
-interface UseSendScannerOptions {
-  onScanSuccess: (data: { recipientName: string; accountId: string; qrValue: string }) => void;
-}
-
-export function useSendScanner({ onScanSuccess }: UseSendScannerOptions) {
+export function useSendScanner() {
+  const router = useRouter();
   const [permission, requestPermission] = useCameraPermissions();
   const [scanned, setScanned] = useState(false);
   const [torch, setTorch] = useState(false);
@@ -18,15 +15,18 @@ export function useSendScanner({ onScanSuccess }: UseSendScannerOptions) {
     if (scanned) return;
     setScanned(true);
     const parsed = paymentService.parseQrPayload(data);
-    onScanSuccess({
-      recipientName: parsed.recipientName || 'Recipient',
-      accountId: parsed.accountId,
-      qrValue: data,
+    router.push({
+      pathname: '/(app)/transfer',
+      params: {
+        recipientName: parsed.recipientName || 'Recipient',
+        accountId: parsed.accountId,
+        amount: parsed.amount || '',
+        qrValue: data,
+      },
     });
   };
 
   const resetScan = () => setScanned(false);
-
   const toggleTorch = () => setTorch(!torch);
 
   return {
@@ -42,4 +42,3 @@ export function useSendScanner({ onScanSuccess }: UseSendScannerOptions) {
 }
 
 export default useSendScanner;
-

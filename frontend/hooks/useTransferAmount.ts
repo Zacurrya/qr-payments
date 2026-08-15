@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Alert } from 'react-native';
+import { useRouter } from 'expo-router';
 import { useAuth } from './useAuth';
 import paymentService from '../services/paymentService';
 import 'react-native-get-random-values';
@@ -8,12 +9,13 @@ import { v4 as uuidv4 } from 'uuid';
 interface UseTransferAmountOptions {
   creditorId: string;
   initialAmount?: string;
-  onConfirmSuccess: () => void;
 }
 
-export function useTransferAmount({ creditorId, initialAmount = '', onConfirmSuccess }: UseTransferAmountOptions) {
+export function useTransferAmount({ creditorId, initialAmount = '' }: UseTransferAmountOptions) {
+  const router = useRouter();
   const { session, updateSession } = useAuth();
   const [amountStr, setAmountStr] = useState<string>(initialAmount);
+  const [selectedCurrency, setSelectedCurrency] = useState<string>('');
   const [note, setNote] = useState<string>('');
   const [isProcessing, setIsProcessing] = useState<boolean>(false);
   const [showSuccessModal, setShowSuccessModal] = useState<boolean>(false);
@@ -46,20 +48,19 @@ export function useTransferAmount({ creditorId, initialAmount = '', onConfirmSuc
       return;
     }
 
-    // Generate a fresh idempotency key on each button press.
-    // If the network fails and the app retries internally, the same key
-    // should be reused — but a new tap by the user always gets a new key.
     const idempotencyKey = uuidv4();
 
     setIsProcessing(true);
     try {
-      await paymentService.processPayment(session.accountId, creditorId, amountStr, note, idempotencyKey);
-      
-      // Deduct the balance locally so it reflects immediately
-      const currentBalance = parseFloat(session.balance) || 0;
-      const transferAmount = parseFloat(amountStr) || 0;
-      await updateSession({ balance: (currentBalance - transferAmount).toString() });
-      
+      const currencyToSend = selectedCurrency || session.currency;
+      await paymentService.processPayment(session.accountId, creditorId, amountStr, currencyToSend, note, idempotencyKey);
+
+      if (currencyToSend === session.currency) {
+        const currentBalance = parseFloat(session.balance) || 0;
+        const transferAmountInBase = parseFloat(amountStr) || 0;
+        await updateSession({ balance: (currentBalance - transferAmountInBase).toString() });
+      }
+
       setShowSuccessModal(true);
     } catch (e: any) {
       Alert.alert('Payment Failed', e.message || 'An error occurred during transfer.');
@@ -70,13 +71,15 @@ export function useTransferAmount({ creditorId, initialAmount = '', onConfirmSuc
 
   const handleCloseModal = () => {
     setShowSuccessModal(false);
-    onConfirmSuccess();
+    router.replace('/(app)/home');
   };
 
   return {
     amountStr,
     note,
     setNote,
+    selectedCurrency,
+    setSelectedCurrency,
     isProcessing,
     showSuccessModal,
     handleKeyPress,

@@ -224,8 +224,9 @@ export const ColorSpectrumPicker: React.FC<ColorSpectrumPickerProps> = ({
               position: 'absolute',
               left: Math.max(0, Math.min(hueThumbX - 12, (hueWidth || 260) - 24)),
               top: 0,
+              backgroundColor: pureHueHex,
             }}
-            className="w-6 h-6 rounded-full bg-white border-2 border-slate-900 shadow-md pointer-events-none"
+            className="w-6 h-6 rounded-full border-2 border-white shadow-md pointer-events-none"
           />
         </View>
       </View>
