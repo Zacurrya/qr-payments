@@ -3,34 +3,43 @@ services:
     image: redis:7-alpine
     ports:
       - "6379:6379"
-    restart: always
+    restart: unless-stopped
 
   api:
-    build: ./backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
     ports:
       - "8088:8088"
     env_file:
       - .env
     environment:
-      - REDIS_HOST=redis
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
     depends_on:
-      - redis
-    restart: always
+      redis:
+        condition: service_started
+    restart: unless-stopped
 
   frontend:
-    build: ./frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
     ports:
       - "8081:8081"
     env_file:
       - .env
     environment:
-      - REACT_NATIVE_PACKAGER_HOSTNAME=${REACT_NATIVE_PACKAGER_HOSTNAME:-}
-      - CHOKIDAR_USEPOLLING=true
+      REACT_NATIVE_PACKAGER_HOSTNAME: ${REACT_NATIVE_PACKAGER_HOSTNAME:-}
+      CHOKIDAR_USEPOLLING: "true"
+      EXPO_DEVTOOLS_LISTEN_ADDRESS: 0.0.0.0
     volumes:
       - ./frontend:/app
       - /app/node_modules
+    command: npx expo start --host lan --port 8081
     stdin_open: true
     tty: true
     depends_on:
-      - api
-    restart: always
+      api:
+        condition: service_started
+    restart: unless-stopped

@@ -1,14 +1,21 @@
 # Build stage
-FROM maven:3.9-eclipse-temurin-21 AS build
+FROM maven:3.9.9-eclipse-temurin-21 AS build
 WORKDIR /app
-COPY pom.xml .
+
+COPY pom.xml ./
+COPY .mvn .mvn
+COPY mvnw ./
+COPY mvnw.cmd ./
 COPY src ./src
-# Build the application skipping tests to speed up the build in dev
-RUN mvn clean package -DskipTests
+COPY config ./config
+
+RUN chmod +x mvnw && ./mvnw clean package -DskipTests
 
 # Run stage
 FROM eclipse-temurin:21-jre
 WORKDIR /app
-COPY --from=build /app/target/*.jar app.jar
+
+COPY --from=build /app/target/*.jar /app/app.jar
+
 EXPOSE 8088
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-jar", "/app/app.jar"]
