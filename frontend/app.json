@@ -5,11 +5,11 @@
     "scheme": "qrpayments",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/logo.png",
+    "icon": "./assets/adaptive-icon.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "splash": {
-      "image": "./assets/logo.png",
+      "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
       "backgroundColor": "#F0F5FF"
     },
@@ -18,7 +18,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/logo.png",
+        "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#F0F5FF"
       },
       "edgeToEdgeEnabled": true,
@@ -26,7 +26,7 @@
       "usesCleartextTraffic": true
     },
     "web": {
-      "favicon": "./assets/logo.png",
+      "favicon": "./assets/adaptive-icon.png",
       "bundler": "metro"
     },
     "plugins": [
