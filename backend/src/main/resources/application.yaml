@@ -2,8 +2,8 @@ server:
   port: 8088
 spring:
   datasource:
-    url: jdbc:postgresql://aws-0-eu-north-1.pooler.supabase.com:5432/postgres?sslmode=require&prepareThreshold=0
-    username: postgres.tuoqiunkzfqytdjohlcs
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://aws-0-eu-north-1.pooler.supabase.com:5432/postgres?sslmode=require&prepareThreshold=0}
+    username: ${SPRING_DATASOURCE_USERNAME:postgres.tuoqiunkzfqytdjohlcs}
     password: ${SPRING_DATASOURCE_PASSWORD}
     driver-class-name: org.postgresql.Driver
 
@@ -25,6 +25,6 @@ spring:
       port: ${REDIS_PORT:6379}
 
 supabase:
-  url: ${SUPABASE_URL:https://tuoqiunkzfqytdjohlcs.supabase.co}
+  url: ${SUPABASE_URL}
   service-role-key: ${SUPABASE_SERVICE_ROLE_KEY}
-  anon-key: ${EXPO_PUBLIC_SUPABASE_ANON_KEY:sb_publishable_3rRgXi8WkZmRTrjC7_muvw_QIqa8kjJ}
+  anon-key: ${EXPO_PUBLIC_SUPABASE_ANON_KEY}
