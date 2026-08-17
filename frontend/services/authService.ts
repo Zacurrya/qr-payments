@@ -1,6 +1,8 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export const API_BASE = 'http://192.168.0.180:8088';
+const configuredApiBase = process.env.EXPO_PUBLIC_API_URL?.replace(/\/+$/, '');
+export const API_BASE = configuredApiBase || 'http://localhost:8088';
+export const AUTH_API = `${API_BASE}/api/v1/auth`;
 const AUTH_SESSION_KEY = 'QPay_session';
 
 export interface AuthSession {
@@ -21,7 +23,7 @@ const authService = {
     currency: string = 'USD',
     accountType: 'CONSUMER' | 'MERCHANT' = 'CONSUMER'
   ): Promise<AuthSession> => {
-    const res = await fetch(`${API_BASE}/api/v1/auth/register`, {
+    const res = await fetch(`${AUTH_API}/register`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, password, initialBalance, currency, accountType }),
@@ -45,7 +47,7 @@ const authService = {
   },
 
   logIn: async (username: string, password: string): Promise<AuthSession> => {
-    const res = await fetch(`${API_BASE}/api/v1/auth/login`, {
+    const res = await fetch(`${AUTH_API}/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, password }),
