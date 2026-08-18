@@ -26,16 +26,21 @@ The easiest way to get the entire stack up and running is to use Docker Compose.
     ```
 
 2.  **Set up your environment variables:**
-    Ensure you have a `.env` file at the root of the project with your Supabase credentials:
+    Create a `.env` file at the project root (or in the `frontend` folder if you are running Expo locally) with your app configuration:
     ```env
     # Backend
     SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
     SPRING_DATASOURCE_PASSWORD=your_db_password
-    
+
     # Frontend
     EXPO_PUBLIC_SUPABASE_URL=your_supabase_url
     EXPO_PUBLIC_SUPABASE_ANON_KEY=your_anon_key
-    EXPO_PUBLIC_API_BASE_URL=http://localhost:8088
+    EXPO_PUBLIC_API_URL=https://your-backend.up.railway.app
+    ```
+
+    Use `EXPO_PUBLIC_API_URL` for the frontend API host. For local development, it can also be:
+    ```env
+    EXPO_PUBLIC_API_URL=http://localhost:8088
     ```
 
 3.  **Build and start the containers:**
@@ -44,7 +49,8 @@ The easiest way to get the entire stack up and running is to use Docker Compose.
     ```
 
 4.  **Access the application:**
-    *   The **Spring Boot API** will be available at `http://localhost:8088`.
+    *   The **Spring Boot API** will be available at `http://localhost:8088` when running locally.
+    *   In production or on Railway, the frontend should point to the deployed backend URL via `EXPO_PUBLIC_API_URL`.
     *   The **Expo Development Server** will run on port `8081`. You can access it by viewing the logs of the frontend container or running `npm run start` locally in the `/frontend` directory.
 
 ## Features
